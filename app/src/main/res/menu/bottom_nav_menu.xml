@@ -16,4 +16,9 @@
         android:icon="@drawable/ic_nav_notifications_foreground"
         android:title="@string/menu_notifications" />
 
+    <item
+        android:id="@+id/nav_diets"
+        android:icon="@drawable/ic_fast_food_foreground"
+        android:title="@string/menu_diets" />
+
 </menu>

@@ -10,5 +10,6 @@ data class User(
     val city: String,
     val country: String,
     val postalCode: String,
-    val image: String
+    val image: String,
+    val goals: List<Goal>
 )
