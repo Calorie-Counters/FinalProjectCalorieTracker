@@ -9,7 +9,7 @@ data class Item(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     @ColumnInfo(name = "name")
-    val itemName: String,
+    val item_name: String,
     @ColumnInfo(name = "weight")
     val item_weight: Double,
     @ColumnInfo(name = "quantity")
