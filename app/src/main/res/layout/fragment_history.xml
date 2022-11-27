@@ -21,31 +21,43 @@
                 app:layout_constraintHorizontal_bias="0.206"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.052" />
+                app:layout_constraintVertical_bias="0.111" />
 
             <Button
                 android:id="@+id/thirtyDays"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Last 30 Days"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/sevenDays"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.818"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.051" />
+                app:layout_constraintHorizontal_bias="0.595"
+                app:layout_constraintStart_toEndOf="@+id/sevenDays"
+                app:layout_constraintTop_toTopOf="@+id/sevenDays"
+                app:layout_constraintVertical_bias="0.0" />
 
-            <TextView
-                android:id="@+id/historyList"
-                android:layout_width="409dp"
-                android:layout_height="546dp"
-                android:layout_marginTop="52dp"
-                android:text="Hello"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/historyView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/sevenDays"
-                app:layout_constraintVertical_bias="1.0" />
+                app:layout_constraintVertical_bias="0.0"
+                tools:layout_editor_absoluteX="0dp"
+                android:layout_marginBottom="40dp"
+                android:layout_marginTop="20dp"/>
+
+            <!--            <TextView
+                            android:id="@+id/historyList"
+                            android:layout_width="411dp"
+                            android:layout_height="278dp"
+                            android:layout_marginTop="52dp"
+                            android:text="Hello"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="1.0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/historyView"
+                            app:layout_constraintVertical_bias="1.0" />-->
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </FrameLayout>
