@@ -45,17 +45,17 @@
         tools:layout="@layout/fragment_goals" />
     <fragment
         android:id="@+id/nav_profile"
-        android:name="project.st991377867.marcin.ui.goals.GoalsFragment"
+        android:name="project.st991377867.marcin.ui.profile.ProfileFragment"
         android:label="@string/menu_profile"
         tools:layout="@layout/fragment_goals" />
     <fragment
         android:id="@+id/nav_history"
-        android:name="project.st991377867.marcin.ui.goals.GoalsFragment"
+        android:name="project.st991377867.marcin.ui.history.HistoryFragment"
         android:label="@string/menu_history"
         tools:layout="@layout/fragment_history" />
     <fragment
         android:id="@+id/nav_settings"
-        android:name="project.st991377867.marcin.ui.goals.GoalsFragment"
+        android:name="project.st991377867.marcin.ui.settings.SettingsFragment"
         android:label="@string/menu_settings"
         tools:layout="@layout/fragment_settings" />
     <fragment
