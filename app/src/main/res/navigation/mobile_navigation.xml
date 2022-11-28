@@ -10,10 +10,12 @@
         android:name="project.st991377867.marcin.ui.home.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" >
-
         <action
-            android:id="@+id/action_nav_home_to_itemListFragment"
-            app:destination="@id/itemListFragment" />
+            android:id="@+id/action_nav_home_to_itemFragment"
+            app:destination="@id/itemFragment" />
+        <action
+            android:id="@+id/action_nav_home_to_itemDetailFragment"
+            app:destination="@id/itemDetailFragment" />
     </fragment>
 
     <fragment
@@ -59,10 +61,19 @@
         android:label="@string/menu_settings"
         tools:layout="@layout/fragment_settings" />
     <fragment
-        android:id="@+id/itemListFragment"
-        android:name="project.st991377867.marcin.ItemListFragment"
-        android:label="ItemListFragment"
-        tools:layout="@layout/fragment_item" />
+        android:id="@+id/itemFragment"
+        android:name="project.st991377867.marcin.ui.item.ItemFragment"
+        android:label="fragment_item"
+        tools:layout="@layout/fragment_item" >
+        <action
+            android:id="@+id/action_itemFragment_to_nav_home"
+            app:destination="@id/nav_home" />
+    </fragment>
+    <fragment
+        android:id="@+id/itemDetailFragment"
+        android:name="project.st991377867.marcin.ui.item.ItemDetailFragment"
+        android:label="fragment_item_detail"
+        tools:layout="@layout/fragment_item_detail" />
 
 
 </navigation>
