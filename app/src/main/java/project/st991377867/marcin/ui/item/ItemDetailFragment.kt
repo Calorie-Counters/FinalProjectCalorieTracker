@@ -18,7 +18,7 @@ class ItemDetailFragment: Fragment() {
         fun newInstance() = ItemFragment()
     }
 
-    private lateinit var viewModel: ItemViewModel
+    //private lateinit var viewModel: ItemViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,7 +31,7 @@ class ItemDetailFragment: Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(ItemViewModel::class.java)
+        //viewModel = ViewModelProvider(this).get(ItemViewModel::class.java)
         // TODO: Use the ViewModel
     }
 }
