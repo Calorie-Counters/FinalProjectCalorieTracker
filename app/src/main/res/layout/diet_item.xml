@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardElevation="50dp"
+    app:cardCornerRadius="10dp"
+    android:layout_margin="3dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="12dp"
+        android:id="@+id/dietRecordLayout">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true">
+
+            <ImageView
+                android:id="@+id/expandImage"
+                android:layout_alignParentLeft="true"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:src="@color/black" />
+
+            <TextView
+                android:id="@+id/dietName"
+                android:layout_below="@+id/expandImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Diet Name" />
+
+            <TextView
+                android:id="@+id/dietType"
+                android:layout_below="@+id/dietName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Diet Type" />
+
+            <TextView
+                android:id="@+id/dietCalories"
+                android:layout_toRightOf="@+id/dietType"
+                android:layout_below="@+id/dietName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="Diet Calories" />
+
+            <TextView
+                android:id="@+id/dietDuration"
+                android:layout_toRightOf="@+id/dietCalories"
+                android:layout_below="@+id/dietName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="Diet Duration" />
+
+            <TextView
+                android:id="@+id/dietDescription"
+                android:layout_below="@+id/dietType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Diet Description" />
+
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>
+

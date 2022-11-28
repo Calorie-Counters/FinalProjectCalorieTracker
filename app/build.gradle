@@ -2,7 +2,11 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'com.google.gms.google-services'  // Google Play services Gradle plugin
+    id 'androidx.navigation.safeargs.kotlin'
+    id 'kotlin-kapt'
 }
+
+
 
 android {
     namespace 'project.st991377867.marcin'
@@ -49,16 +53,21 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
     implementation 'androidx.databinding:databinding-runtime:7.3.1'
+    implementation 'androidx.room:room-common:2.4.3'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
 
-    implementation 'com.firebaseui:firebase-ui-auth:8.0.2'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 
-    //firestore implementation
     implementation 'com.google.firebase:firebase-firestore-ktx:24.4.0'
+    implementation 'com.firebaseui:firebase-ui-auth:8.0.2'
 
-    //CardView implementation
-    implementation 'androidx.cardview:cardview:1.0.0'
+
+    implementation("androidx.recyclerview:recyclerview:1.2.1")
+    implementation("androidx.cardview:cardview:1.0.0")
+
+    implementation "androidx.room:room-runtime:2.4.3"
+    kapt "androidx.room:room-compiler:2.4.3"
+    implementation "androidx.room:room-ktx:2.4.3"
 }
