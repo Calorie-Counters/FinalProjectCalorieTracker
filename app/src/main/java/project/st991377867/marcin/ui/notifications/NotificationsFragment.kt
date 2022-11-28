@@ -6,7 +6,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import project.st991377867.marcin.R
+import project.st991377867.marcin.data.model.Notification
+import project.st991377867.marcin.data.model.Reminder
+import project.st991377867.marcin.databinding.FragmentNotificationsBinding
+import project.st991377867.marcin.ui.reminders.RemindersRecyclerView
 
 class NotificationsFragment : Fragment() {
 
@@ -14,19 +20,29 @@ class NotificationsFragment : Fragment() {
         fun newInstance() = NotificationsFragment()
     }
 
-    private lateinit var viewModel: NotificationsViewModel
+    private val viewModel: NotificationsViewModel by lazy {
+        ViewModelProvider(this).get(NotificationsViewModel::class.java)
+    }
+    private lateinit var binding: FragmentNotificationsBinding
+    private lateinit var recordRecyclerView: RecyclerView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_notifications, container, false)
+        binding = FragmentNotificationsBinding.inflate(inflater)
+        recordRecyclerView = binding.recyclerView
+
+        return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(NotificationsViewModel::class.java)
-        // TODO: Use the ViewModel
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val list: List<Notification> = viewModel.getDummyNotifications()
+
+        recordRecyclerView.adapter = NotificationRecyclerView(list)
+        recordRecyclerView.layoutManager = LinearLayoutManager(activity)
+        recordRecyclerView.setHasFixedSize(true)
     }
 
 }
