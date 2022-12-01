@@ -26,6 +26,10 @@ class ProfileFragment : Fragment() {
     ): View? {
         binding = FragmentProfileBinding.inflate(inflater)
 
+        // disable editing
+        binding.inputDisplayName.isEnabled = false
+        binding.inputEmail.isEnabled = false
+
         // bind user data to view
         viewModel.getLiveUserData().observe(viewLifecycleOwner) {
             Log.i(TAG, "Got user data: ${it}")
