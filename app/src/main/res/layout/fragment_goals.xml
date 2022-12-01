@@ -1,13 +1,249 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.goals.GoalsFragment">
-
-    <TextView
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+<!--    <data>
+        <variable
+            name="goalCalorie"
+            type="int" />
+        <variable
+            name="goalText"
+            type="String" />
+        <variable
+            name="goalDateSet"
+            type="String" />
+        <variable
+            name="dailyCalorie"
+            type="String" />
+    </data>-->
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Goals" />
+        tools:context=".ui.goals.GoalsFragment">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/goalsConstraintLayout">
 
-</FrameLayout>
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/goalsDisplayGoalGroup"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                app:constraint_referenced_ids="goalsDailyCalorieLabel, goalsDailyCalorieActual
+                , goalsDailyCalorieGoal, goalsDailyCalorieSeparator, goalsDailyStatus, goalsSetDate
+                , goalsStatementLabel, goalsStatement, goalsSetDateLabel, goalsEditButton, goalsDeleteButton" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/goalsEditGoalGroup"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                app:constraint_referenced_ids="goalsEditSaveButton, goalsEditCalorieLabel
+                , goalsEditCalorieTargetET, goalsEditGoalStatement, goalsEditGoalStatementLabel" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/goalsNoGoalGroup"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                app:constraint_referenced_ids="goalsSetGoalButton, goalsSetGoalsText" />
+            <!--No Goal Group-->
+            <Button
+                android:id="@+id/goalsSetGoalButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="@id/goalsConstraintLayout"
+                app:layout_constraintRight_toRightOf="@id/goalsConstraintLayout"
+                app:layout_constraintTop_toTopOf="@id/goalsConstraintLayout"
+                app:layout_constraintBottom_toBottomOf="@id/goalsConstraintLayout"
+                android:text="Set Goal"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/goalsSetGoalsText"
+                app:layout_constraintLeft_toLeftOf="@id/goalsConstraintLayout"
+                app:layout_constraintRight_toRightOf="@id/goalsConstraintLayout"
+                app:layout_constraintTop_toBottomOf="@id/goalsSetGoalButton"
+                android:text="You haven't set a Goal yet!"/>
+
+            <!-- Display Goal information -->
+            <TextView
+                android:id="@+id/goalsDailyCalorieLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="@id/goalsConstraintLayout"
+                app:layout_constraintRight_toRightOf="@id/goalsDailyCalorieActual"
+                app:layout_constraintTop_toTopOf="@id/goalsConstraintLayout"
+                app:layout_constraintBottom_toBottomOf="@id/goalsConstraintLayout"
+                android:text="Today's Calorie Intake:" />
+            <TextView
+                android:id="@+id/goalsDailyCalorieGoal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="@id/goalsDailyCalorieSeparator"
+                app:layout_constraintRight_toRightOf="@id/goalsConstraintLayout"
+                app:layout_constraintTop_toTopOf="@id/goalsDailyCalorieLabel"
+                app:layout_constraintBottom_toBottomOf="@id/goalsDailyCalorieLabel"
+                app:layout_constraintStart_toEndOf="@+id/goalsDailyCalorieSeparator"
+                android:text="1500"/>
+            <TextView
+                android:id="@+id/goalsDailyCalorieSeparator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp"
+                app:layout_constraintLeft_toLeftOf="@id/goalsDailyCalorieActual"
+                app:layout_constraintRight_toRightOf="@id/goalsDailyCalorieGoal"
+                app:layout_constraintTop_toTopOf="@id/goalsDailyCalorieLabel"
+                app:layout_constraintBottom_toBottomOf="@id/goalsDailyCalorieLabel"
+                app:layout_constraintStart_toEndOf="@+id/goalsDailyCalorieActual"
+                app:layout_constraintEnd_toStartOf="@id/goalsDailyCalorieGoal"
+                android:text="/"/>
+            <TextView
+                android:id="@+id/goalsDailyCalorieActual"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="@id/goalsDailyCalorieLabel"
+                app:layout_constraintRight_toRightOf="@id/goalsConstraintLayout"
+                app:layout_constraintTop_toTopOf="@id/goalsDailyCalorieLabel"
+                app:layout_constraintBottom_toBottomOf="@id/goalsDailyCalorieLabel"
+                android:text="1350" />
+            <ImageView
+                android:id="@+id/goalsDailyStatus"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                app:layout_constraintLeft_toLeftOf="@id/goalsDailyCalorieGoal"
+                app:layout_constraintRight_toRightOf="@id/goalsConstraintLayout"
+                app:layout_constraintTop_toTopOf="@id/goalsDailyCalorieLabel"
+                app:layout_constraintBottom_toBottomOf="@id/goalsDailyCalorieLabel"
+                android:background="@drawable/circle_shape"/>
+            <TextView
+                android:id="@+id/goalsSetDateLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="@id/goalsConstraintLayout"
+                app:layout_constraintRight_toRightOf="@id/goalsSetDate"
+                app:layout_constraintTop_toBottomOf="@id/goalsDailyCalorieLabel"
+                app:layout_constraintBottom_toBottomOf="@id/goalsConstraintLayout"
+                app:layout_constraintBaseline_toBaselineOf="@id/goalsDailyCalorieLabel"
+                app:layout_constraintStart_toStartOf="@+id/goalsDailyCalorieLabel"
+                app:layout_marginBaseline="25dp"
+                android:text="Daily Goal Since:"/>
+            <TextView
+                android:id="@+id/goalsSetDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="@id/goalsConstraintLayout"
+                app:layout_constraintRight_toRightOf="@id/goalsConstraintLayout"
+                app:layout_constraintTop_toTopOf="@id/goalsSetDateLabel"
+                app:layout_constraintBottom_toBottomOf="@id/goalsSetDateLabel"
+                app:layout_constraintStart_toEndOf="@+id/goalsSetDateLabel"
+                android:text="01/01/2022"/>
+            <TextView
+                android:id="@+id/goalsStatementLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="@id/goalsConstraintLayout"
+                app:layout_constraintRight_toRightOf="@id/goalsSetDate"
+                app:layout_constraintTop_toBottomOf="@id/goalsSetDateLabel"
+                app:layout_constraintBottom_toBottomOf="@id/goalsConstraintLayout"
+                app:layout_constraintBaseline_toBaselineOf="@id/goalsSetDateLabel"
+                app:layout_constraintStart_toStartOf="@+id/goalsSetDateLabel"
+                app:layout_marginBaseline="25dp"
+                android:text="Goal:"/>
+            <TextView
+                android:id="@+id/goalsStatement"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="@id/goalsConstraintLayout"
+                app:layout_constraintRight_toRightOf="@id/goalsConstraintLayout"
+                app:layout_constraintTop_toTopOf="@id/goalsStatementLabel"
+                app:layout_constraintBottom_toBottomOf="@id/goalsStatementLabel"
+                app:layout_constraintStart_toEndOf="@+id/goalsStatementLabel"
+                android:text="lose weight"/>
+
+            <Button
+                android:id="@+id/goalsEditButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="@id/goalsConstraintLayout"
+                app:layout_constraintRight_toRightOf="@+id/goalsConstraintLayout"
+                app:layout_constraintTop_toBottomOf="@id/goalsStatementLabel"
+                app:layout_constraintBottom_toBottomOf="@id/goalsConstraintLayout"
+                android:text="Edit Goal"/>
+            <Button
+                android:id="@+id/goalsDeleteButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="@id/goalsConstraintLayout"
+                app:layout_constraintRight_toRightOf="@id/goalsConstraintLayout"
+                app:layout_constraintTop_toBottomOf="@id/goalsEditButton"
+                android:text="Remove Goal"/>
+
+
+            <!-- Edit/Add section -->
+            <TextView
+                android:id="@+id/goalsEditCalorieLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="@id/goalsConstraintLayout"
+                app:layout_constraintRight_toLeftOf="@+id/goalsEditCalorieTargetET"
+                app:layout_constraintTop_toTopOf="@id/goalsConstraintLayout"
+                app:layout_constraintBottom_toBottomOf="@id/goalsConstraintLayout"
+                android:text="Daily Calorie Intake:"/>
+
+            <EditText
+                android:id="@+id/goalsEditCalorieTargetET"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="@id/goalsEditCalorieLabel"
+                app:layout_constraintRight_toRightOf="@+id/goalsConstraintLayout"
+                app:layout_constraintTop_toTopOf="@id/goalsEditCalorieLabel"
+                app:layout_constraintBottom_toBottomOf="@id/goalsEditCalorieLabel"
+                app:layout_constraintStart_toEndOf="@id/goalsEditCalorieLabel"
+                android:ems="10"
+                android:inputType="number"
+                tools:layout_editor_absoluteX="18dp"
+                tools:layout_editor_absoluteY="253dp"/>
+
+            <TextView
+                android:id="@+id/goalsEditGoalStatementLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/goalsDailyCalorieLabel"
+                app:layout_constraintBottom_toBottomOf="@id/goalsConstraintLayout"
+                app:layout_constraintLeft_toLeftOf="@id/goalsEditCalorieLabel"
+                app:layout_constraintBaseline_toBaselineOf="@id/goalsDailyCalorieLabel"
+                app:layout_marginBaseline="55dp"
+                android:text="Edit Goal Statement:"/>
+
+            <EditText
+                android:id="@+id/goalsEditGoalStatement"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="text"
+                app:layout_constraintBaseline_toBaselineOf="@id/goalsEditGoalStatementLabel"
+                app:layout_constraintBottom_toBottomOf="@id/goalsEditGoalStatementLabel"
+                app:layout_constraintLeft_toLeftOf="@id/goalsEditGoalStatementLabel"
+                app:layout_constraintRight_toRightOf="@+id/goalsConstraintLayout"
+                app:layout_constraintStart_toEndOf="@id/goalsEditGoalStatementLabel"
+                app:layout_constraintTop_toTopOf="@id/goalsEditGoalStatementLabel" />
+
+            <Button
+                android:id="@+id/goalsEditSaveButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="@id/goalsConstraintLayout"
+                app:layout_constraintRight_toRightOf="@id/goalsConstraintLayout"
+                app:layout_constraintTop_toBottomOf="@id/goalsEditGoalStatementLabel"
+                app:layout_constraintBottom_toBottomOf="@id/goalsConstraintLayout"
+                android:text="Save"/>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </FrameLayout>
+</layout>
