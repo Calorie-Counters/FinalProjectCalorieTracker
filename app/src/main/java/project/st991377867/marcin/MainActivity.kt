@@ -16,6 +16,12 @@ import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import project.st991377867.marcin.databinding.ActivityMainBinding
 
+/**
+ *
+ * Main activity
+ *
+ * @constructor Create Main activity
+ */
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -79,6 +85,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Toggle navigation drawer
+     *
+     * @param enable true to enable, false to disable
+     */
     fun toggleDrawer(enable: Boolean) {
         if (enable) {
             binding.appBarMain.toolbar.visibility = View.VISIBLE
@@ -87,6 +98,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Toggle bottom navigation
+     *
+     * @param enable true to enable, false to disable
+     */
     fun toggleBottomNav(enable: Boolean) {
         if (enable) {
             binding.btmNavView.visibility = View.VISIBLE
