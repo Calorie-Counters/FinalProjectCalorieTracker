@@ -14,6 +14,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
+import project.st991377867.marcin.data.model.User
 import project.st991377867.marcin.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
