@@ -2,11 +2,15 @@ package project.st991377867.marcin
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.TextView
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.LiveData
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -19,8 +23,11 @@ import project.st991377867.marcin.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
+    val TAG = "MainActivity"
+
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
+    private lateinit var user: LiveData<User>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +53,6 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
         btmNavView.setupWithNavController(navController)
-
 
     }
 
@@ -80,6 +86,18 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        if (FirebaseAuth.getInstance().currentUser != null) {
+            user = User.requestLiveUserData()
+            setDrawerFields(user)
+        } else {
+            NavHostFragment.findNavController(
+                supportFragmentManager.findFragmentById(
+                    R.id.nav_host_fragment_content_main)!!).navigate(R.id.nav_login)
+        }
+    }
+
     fun toggleDrawer(enable: Boolean) {
         if (enable) {
             binding.appBarMain.toolbar.visibility = View.VISIBLE
@@ -93,6 +111,23 @@ class MainActivity : AppCompatActivity() {
             binding.btmNavView.visibility = View.VISIBLE
         } else {
             binding.btmNavView.visibility = View.GONE
+        }
+    }
+
+    private fun setDrawerFields(userLiveData: LiveData<User>) {
+        val user = userLiveData.value
+        val headerView = binding.navView.getHeaderView(0)
+        val fullName = headerView.findViewById<TextView>(R.id.textViewFullName)
+        val email = headerView.findViewById<TextView>(R.id.textViewEmail)
+        if (user != null) {
+            userLiveData.observe(this) {
+                fullName.text =
+                    if (user.firstName != "")
+                        "${user.firstName} ${user.lastName}"
+                    else
+                        user.displayName
+                email.text = user.email
+            }
         }
     }
 

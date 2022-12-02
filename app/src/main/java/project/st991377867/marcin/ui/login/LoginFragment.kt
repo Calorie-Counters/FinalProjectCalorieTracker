@@ -62,18 +62,8 @@ class LoginFragment : Fragment() {
                     "Successfully signed in user " +
                             "${FirebaseAuth.getInstance().currentUser?.displayName}!"
                 )
-                // Add user to database if response is new
-                if (response?.isNewUser == true) {
-                    val user = User(FirebaseAuth.getInstance().uid!!)
-                    viewModel.addUserData(user)
-                // If user it not new, but not in database then add user
-                } else if (firestore.collection("users").document(FirebaseAuth.getInstance().uid!!).get().addOnSuccessListener { document ->
-                        if (document != null && !document.exists()) {
-                            val user = User(FirebaseAuth.getInstance().uid!!)
-                            viewModel.addUserData(user)
-                        }
-                    }.isSuccessful) {
-                }
+                // TODO: Double check edge cases - Marcin K. (12/01/22)
+                User.getUser(true)
                 // Redirect to home screen
                 redirectToFragment(R.id.nav_home)
             } else {

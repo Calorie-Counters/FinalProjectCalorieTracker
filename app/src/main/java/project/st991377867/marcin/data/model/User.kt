@@ -99,6 +99,7 @@ class User {
             docRef.set(userHashMap)
                 .addOnSuccessListener { Log.i(TAG, "DocumentSnapshot successfully written!") }
                 .addOnFailureListener { e -> Log.i(TAG, "Error writing document", e) }
+            userLiveData.value = user
         }
 
         /**
@@ -106,6 +107,7 @@ class User {
          *
          */
         private fun requestUserData() {
+            Log.i(TAG, "User: ${user}")
             syncFlagLiveData.value = false
             val db = FirebaseFirestore.getInstance()
             val docRef = db.collection("users").document(user.uid)
@@ -122,6 +124,7 @@ class User {
                         userLiveData.value = user
                         Log.i(TAG, "UserliveData value: ${userLiveData.value!!.firstName}")
                     } else {
+                        updateUserData(user)
                         Log.i(TAG, "No such document")
                     }
                     syncFlagLiveData.value = true
