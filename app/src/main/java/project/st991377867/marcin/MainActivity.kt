@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.LiveData
@@ -53,6 +54,13 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
         btmNavView.setupWithNavController(navController)
+
+        val headerView = navView.getHeaderView(0)
+        val navHeader = headerView.findViewById<LinearLayout>(R.id.nav_header_main)
+        navHeader.setOnClickListener {
+            navController.navigate(R.id.nav_profile)
+            drawerLayout.closeDrawers()
+        }
 
     }
 
