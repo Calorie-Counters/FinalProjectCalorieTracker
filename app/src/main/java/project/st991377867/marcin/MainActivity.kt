@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
 
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
-        val btmNavView: BottomNavigationView = binding.btmNavView
+        val btmNavView: BottomNavigationView = findViewById(R.id.btm_nav_view)
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -108,9 +108,9 @@ class MainActivity : AppCompatActivity() {
 
     fun toggleBottomNav(enable: Boolean) {
         if (enable) {
-            binding.btmNavView.visibility = View.VISIBLE
+            findViewById<BottomNavigationView>(R.id.btm_nav_view).visibility = View.VISIBLE
         } else {
-            binding.btmNavView.visibility = View.GONE
+            findViewById<BottomNavigationView>(R.id.btm_nav_view).visibility = View.GONE
         }
     }
 
