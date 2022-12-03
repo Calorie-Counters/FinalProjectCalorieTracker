@@ -25,7 +25,7 @@ class RemindersRecyclerView (private val reminderList: List<Reminder>) : Recycle
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(reminder: Reminder) {
-            itemView.findViewById<TextView>(R.id.reminderName).text = reminder.name
+            itemView.findViewById<TextView>(R.id.reminderTitle).text = reminder.title
             itemView.findViewById<TextView>(R.id.reminderDate).text = reminder.date
             itemView.findViewById<TextView>(R.id.reminderTime).text = reminder.time
             itemView.findViewById<TextView>(R.id.reminderDescription).text = reminder.description

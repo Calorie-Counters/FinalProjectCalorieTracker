@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardElevation="50dp"
     app:cardCornerRadius="10dp"
-    android:layout_margin="3dp">
+    android:layout_margin="10dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -14,16 +15,16 @@
         android:id="@+id/reminderRecordLayout">
 
         <TextView
-            android:id="@+id/reminderName"
+            android:id="@+id/reminderTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Reminder Name" />
+            android:text="Reminder Title" />
 
         <TextView
             android:id="@+id/reminderDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/reminderName"
+            android:layout_below="@+id/reminderTitle"
             android:text="TEST" />
 
         <TextView

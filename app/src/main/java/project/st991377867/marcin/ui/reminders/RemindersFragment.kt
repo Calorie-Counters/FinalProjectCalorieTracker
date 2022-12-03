@@ -1,6 +1,5 @@
 package project.st991377867.marcin.ui.reminders
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,16 +7,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import project.st991377867.marcin.R
-import project.st991377867.marcin.data.model.Reminder
+import project.st991377867.marcin.adapters.ReminderListAdapter
 import project.st991377867.marcin.databinding.FragmentRemindersBinding
 
 class RemindersFragment : Fragment() {
 
     companion object {
-        fun newInstance() = RemindersFragment()
+        val TAG = "RemindersFragment"
     }
 
     private val viewModel: RemindersViewModel by viewModels()
@@ -28,7 +28,6 @@ class RemindersFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         binding = DataBindingUtil.inflate<FragmentRemindersBinding>(inflater, R.layout.fragment_reminders, container, false)
         recordRecyclerView = binding.recyclerView
 
@@ -37,11 +36,22 @@ class RemindersFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val list: List<Reminder> = viewModel.getDummyReminders()
+        val adapter = ReminderListAdapter {
+            val action = RemindersFragmentDirections.actionNavRemindersToNavReminderDetail("Edit Reminder", it.id)
+            this.findNavController().navigate(action)
+        }
+        viewModel.requestReminders()
+        viewModel.reminderListLiveData.observe(viewLifecycleOwner) {
+            adapter.submitList(it)
+        }
 
-        recordRecyclerView.adapter = RemindersRecyclerView(list)
-        recordRecyclerView.layoutManager = LinearLayoutManager(activity)
-        recordRecyclerView.setHasFixedSize(true)
+        binding.recyclerView.adapter = adapter
+        binding.recyclerView.layoutManager = LinearLayoutManager(this.context)
+        binding.fab.setOnClickListener {
+            val action = RemindersFragmentDirections.actionNavRemindersToNavReminderDetail("New Reminder")
+            this.findNavController().navigate(action)
+        }
+
     }
 
 }
