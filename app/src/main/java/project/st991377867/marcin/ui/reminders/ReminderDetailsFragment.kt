@@ -1,17 +1,25 @@
 package project.st991377867.marcin.ui.reminders
 
+import android.app.DatePickerDialog
+import android.app.Dialog
+import android.app.TimePickerDialog
 import android.os.Bundle
+import android.text.format.DateFormat.is24HourFormat
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.DatePicker
+import android.widget.TimePicker
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import project.st991377867.marcin.data.model.Reminder
 import project.st991377867.marcin.databinding.FragmentReminderDetailsBinding
+import java.util.*
 
 class ReminderDetailsFragment : Fragment() {
 
@@ -21,7 +29,6 @@ class ReminderDetailsFragment : Fragment() {
     private lateinit var binding: FragmentReminderDetailsBinding
     private lateinit var reminder: Reminder
 
-    // firestore database
     private val viewModel by activityViewModels<RemindersViewModel>()
 
     override fun onCreateView(
@@ -58,6 +65,24 @@ class ReminderDetailsFragment : Fragment() {
                 updateReminder()
             }
         }
+
+        // date picker
+        binding.editTextDate.isEnabled = false
+        binding.imageViewCalendar.setOnClickListener {
+            showDatePickerDialog(it)
+        }
+        viewModel.reminderDateLiveData.observe(viewLifecycleOwner) {
+            binding.editTextDate.setText(it)
+        }
+
+        // time picker
+        binding.editTextTime.isEnabled = false
+        binding.imageViewTime.setOnClickListener {
+            showTimePickerDialog(it)
+        }
+        viewModel.reminderTimeLiveData.observe(viewLifecycleOwner) {
+            binding.editTextTime.setText(it)
+        }
     }
 
     private fun showConfirmationDialog() {
@@ -84,8 +109,7 @@ class ReminderDetailsFragment : Fragment() {
         return viewModel.isEntryValid(
             reminder.title,
             reminder.date,
-            reminder.time,
-            reminder.description
+            reminder.time
         )
         return false
     }
@@ -97,6 +121,75 @@ class ReminderDetailsFragment : Fragment() {
             val action = ReminderDetailsFragmentDirections.actionAddItemFragmentToItemListFragment()
             findNavController().navigate(action)
         }
+    }
+
+    private fun showDatePickerDialog(v: View) {
+        val newFragment = DatePickerFragment(binding.editTextDate.text.toString())
+        newFragment.show(parentFragmentManager, "datePicker")
+    }
+
+    private fun showTimePickerDialog(v: View) {
+        val newFragment = TimePickerFragment(binding.editTextTime.text.toString())
+        newFragment.show(parentFragmentManager, "timePicker")
+    }
+
+}
+
+class DatePickerFragment(date: String) : DialogFragment(), DatePickerDialog.OnDateSetListener {
+
+    private val viewModel by activityViewModels<RemindersViewModel>()
+
+    private val c = Calendar.getInstance()
+    private var year = c.get(Calendar.YEAR)
+    private var month = c.get(Calendar.MONTH)
+    private var day = c.get(Calendar.DAY_OF_MONTH)
+
+    init {
+        if (date != "") {
+            val dateParts = date.split("/")
+            day = dateParts[0].toInt()
+            month = dateParts[1].toInt() - 1
+            year = dateParts[2].toInt()
+        }
+    }
+
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        return DatePickerDialog(requireContext(), this, year, month, day)
+    }
+
+    override fun onDateSet(view: DatePicker, year: Int, month: Int, day: Int) {
+        viewModel.setReminderDate("$day/${month + 1}/$year")
+    }
+}
+
+class TimePickerFragment(time: String) : DialogFragment(), TimePickerDialog.OnTimeSetListener {
+
+    private val viewModel by activityViewModels<RemindersViewModel>()
+
+    private val c = Calendar.getInstance()
+    private var hour = c.get(Calendar.HOUR_OF_DAY)
+    private var minute = c.get(Calendar.MINUTE)
+
+    init {
+        if (time != "") {
+            val timeArray = time.split(":")
+            hour = timeArray[0].toInt() - 1
+            minute = timeArray[1].toInt()
+        }
+    }
+
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        return TimePickerDialog(
+            requireContext(),
+            this,
+            hour,
+            minute,
+            is24HourFormat(requireContext())
+        )
+    }
+
+    override fun onTimeSet(view: TimePicker, hourOfDay: Int, minute: Int) {
+        viewModel.setReminderTime("$hourOfDay:${if (minute < 10) "0$minute" else minute}")
     }
 
 }

@@ -16,6 +16,8 @@ class RemindersViewModel : ViewModel() {
     private val firebaseUserID = FirebaseAuth.getInstance().currentUser?.uid
     val reminderListLiveData: LiveData<List<Reminder>> = MutableLiveData()
     val reminderLiveData: LiveData<Reminder> = MutableLiveData()
+    val reminderDateLiveData: LiveData<String> = MutableLiveData()
+    val reminderTimeLiveData: LiveData<String> = MutableLiveData()
 
     fun requestReminder(id: String) : LiveData<Reminder> {
         val reminderLiveData: MutableLiveData<Reminder> = MutableLiveData()
@@ -119,8 +121,18 @@ class RemindersViewModel : ViewModel() {
         return reminderLiveData
     }
 
-    fun isEntryValid(title: String, date: String, time: String, description: String): Boolean {
-        return title.isNotEmpty() && date.isNotEmpty() && time.isNotEmpty() && description.isNotEmpty()
+    fun isEntryValid(title: String, date: String, time: String): Boolean {
+        return title.isNotEmpty() && date.isNotEmpty() && time.isNotEmpty()
+    }
+
+    fun setReminderDate(date: String) {
+        reminderDateLiveData as MutableLiveData
+        reminderDateLiveData.value = date
+    }
+
+    fun setReminderTime(time: String) {
+        reminderTimeLiveData as MutableLiveData
+        reminderTimeLiveData.value = time
     }
 
     private fun reminderToHashMap(reminder: Reminder): HashMap<String, Any> {
