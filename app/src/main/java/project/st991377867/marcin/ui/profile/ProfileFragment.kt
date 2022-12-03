@@ -32,14 +32,12 @@ class ProfileFragment : Fragment() {
 
         // bind user data to view
         viewModel.getLiveUserData().observe(viewLifecycleOwner) {
-            Log.i(TAG, "Got user data: ${it}")
             user = it
             binding.user = user
         }
 
         // bind sync status to view
         viewModel.getSyncStatus().observe(viewLifecycleOwner) {
-            Log.i(TAG, "Got sync status: $it")
             if (it) {
                 binding.progressBackground.visibility = View.GONE
                 binding.progressBar.visibility = View.GONE

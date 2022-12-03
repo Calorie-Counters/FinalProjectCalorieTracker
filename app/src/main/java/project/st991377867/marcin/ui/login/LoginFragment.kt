@@ -15,7 +15,6 @@ import androidx.navigation.fragment.NavHostFragment
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 import project.st991377867.marcin.MainActivity
 import project.st991377867.marcin.R
 import project.st991377867.marcin.data.model.User
@@ -26,9 +25,6 @@ class LoginFragment : Fragment() {
     companion object {
         const val TAG = "LoginFragment"
     }
-
-    private val firestore = FirebaseFirestore.getInstance()
-    private val viewModel by viewModels<LoginViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
