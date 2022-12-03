@@ -39,7 +39,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@={Reminder.title}"
-                android:hint="Title"
                 android:inputType="text"
                 app:layout_constraintTop_toBottomOf="@+id/reminderDetailsTitle" />
 
@@ -55,11 +54,24 @@
 
             <EditText
                 android:id="@+id/editTextDate"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                app:layout_constraintWidth_percent="0.5"
                 android:text="@={Reminder.date}"
-                android:hint="Date"
-                android:inputType="text"
+                android:inputType="date"
+                app:layout_constraintTop_toBottomOf="@+id/reminderDetailsDate"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0" />
+
+            <ImageView
+                android:id="@+id/imageViewCalendar"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:src="@drawable/ic_calendar_foreground"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/editTextDate"
                 app:layout_constraintTop_toBottomOf="@+id/reminderDetailsDate" />
 
             <TextView
@@ -74,11 +86,24 @@
 
             <EditText
                 android:id="@+id/editTextTime"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                app:layout_constraintWidth_percent="0.5"
                 android:text="@={Reminder.time}"
-                android:hint="Time"
                 android:inputType="time"
+                app:layout_constraintTop_toBottomOf="@+id/reminderDetailsTime"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0" />
+
+            <ImageView
+                android:id="@+id/imageViewTime"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:src="@drawable/ic_time_foreground"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/editTextTime"
                 app:layout_constraintTop_toBottomOf="@+id/reminderDetailsTime" />
 
             <TextView
@@ -98,7 +123,7 @@
                 android:ems="10"
                 android:gravity="start|top"
                 android:text="@={Reminder.description}"
-                android:hint="Description"
+                android:hint="(optional)"
                 android:inputType="textMultiLine"
                 app:layout_constraintTop_toBottomOf="@+id/reminderDetailsDesc" />
 
@@ -146,6 +171,8 @@
                 app:layout_constraintTop_toBottomOf="@+id/editTextDesc"
                 app:layout_constraintVertical_bias="0.9"
                 android:text="Add"/>
+
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
