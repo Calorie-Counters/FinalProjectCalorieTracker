@@ -51,6 +51,7 @@ class RemindersViewModel : ViewModel() {
     }
 
     fun requestReminders(limit: Int = 50): LiveData<List<Reminder>> {
+        clearList()
         val reminderList: MutableList<Reminder> = mutableListOf()
         if (firebaseUserID != null){
             fireStoreDatabase.collection("reminders")
@@ -133,6 +134,10 @@ class RemindersViewModel : ViewModel() {
     fun setReminderTime(time: String) {
         reminderTimeLiveData as MutableLiveData
         reminderTimeLiveData.value = time
+    }
+
+    private fun clearList() {
+        (reminderListLiveData as MutableLiveData).value = null
     }
 
     private fun reminderToHashMap(reminder: Reminder): HashMap<String, Any> {
