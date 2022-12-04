@@ -8,6 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import kotlinx.coroutines.Delay
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import project.st991377867.marcin.R
 import project.st991377867.marcin.data.model.Goal
 import project.st991377867.marcin.databinding.FragmentGoalsBinding
@@ -23,6 +27,7 @@ class GoalsFragment : Fragment() {
 
     private lateinit var viewModel: GoalsViewModel
     private lateinit var binding: FragmentGoalsBinding
+    private var goal: Goal? = null
 
     val dateFormat: DateFormat = SimpleDateFormat("dd/MM/yyyy")
 
@@ -33,38 +38,31 @@ class GoalsFragment : Fragment() {
         //return inflater.inflate(R.layout.fragment_goals, container, false)
         binding = DataBindingUtil.inflate<FragmentGoalsBinding>(inflater, R.layout.fragment_goals, container, false)
 
+        viewModel = GoalsViewModel()
 
-        val goal: Goal? = null//viewModel.fetchGoal()
-
-        if (goal == null){
-            binding.goalsNoGoalGroup.visibility = View.VISIBLE
-            binding.goalsDisplayGoalGroup.visibility = View.GONE
-            binding.goalsEditGoalGroup.visibility = View.GONE
-        } else {
-            binding.goalsDisplayGoalGroup.visibility = View.VISIBLE
-            binding.goalsNoGoalGroup.visibility = View.GONE
-            binding.goalsEditGoalGroup.visibility = View.GONE
+        MainScope().launch {
+            populate()
         }
-
         // save/update goal
         binding.goalsEditSaveButton.setOnClickListener {
             val goalStatement: String = binding.goalsEditGoalStatement.text.toString()
             try {
                 val calorie: String = binding.goalsEditCalorieTargetET.text.toString()
-                val newGoal: Goal
-                if (goal != null){
-                    newGoal = Goal(goal.id, goal.userId, goalStatement, calorie,
-                        Calendar.getInstance().time.toString())
-                    viewModel.setNewGoal(newGoal)
-                }
-                binding.goalsDailyCalorieGoal.text = calorie
-                binding.goalsStatement.text = goalStatement
+
+                MainScope().launch {
+
+                    viewModel.setNewGoal(goalStatement, calorie.toInt())
+
+                    populate()
+                    binding.goalsEditGoalStatement.setText("")
+                    binding.goalsEditCalorieTargetET.setText("")
+                }/*
                 binding.goalsSetDate.text = dateFormat.format(Calendar.getInstance().time)
 
 
                 binding.goalsDisplayGoalGroup.visibility = View.VISIBLE
                 binding.goalsNoGoalGroup.visibility = View.GONE
-                binding.goalsEditGoalGroup.visibility = View.GONE
+                binding.goalsEditGoalGroup.visibility = View.GONE*/
             } catch (e: Exception){
                 Toast.makeText(activity,"Error Saving Goal", Toast.LENGTH_LONG).show()
             }
@@ -79,9 +77,10 @@ class GoalsFragment : Fragment() {
         }
 
         binding.goalsDeleteButton.setOnClickListener {
-            binding.goalsNoGoalGroup.visibility = View.VISIBLE
-            binding.goalsDisplayGoalGroup.visibility = View.GONE
-            binding.goalsEditGoalGroup.visibility = View.GONE
+            MainScope().launch {
+                viewModel.deleteGoal()
+                populate()
+            }
         }
 
         binding.goalsEditButton.setOnClickListener {
@@ -91,12 +90,26 @@ class GoalsFragment : Fragment() {
             binding.goalsEditGoalStatement.setText(binding.goalsStatement.text)
             binding.goalsEditCalorieTargetET.setText(binding.goalsDailyCalorieGoal.text)
         }
-
-
-
         return binding.root
     }
 
+    suspend fun populate(){
+        goal = viewModel.fetchGoal()
+        if (goal == null){
+            binding.goalsNoGoalGroup.visibility = View.VISIBLE
+            binding.goalsDisplayGoalGroup.visibility = View.GONE
+            binding.goalsEditGoalGroup.visibility = View.GONE
+        } else {
+            binding.goalsDailyCalorieGoal.text = goal!!.calories
+            binding.goalsDailyCalorieActual.text = "0"// change
+            binding.goalsSetDate.text = goal!!.date
+            binding.goalsStatement.text = goal!!.goal
+
+            binding.goalsDisplayGoalGroup.visibility = View.VISIBLE
+            binding.goalsNoGoalGroup.visibility = View.GONE
+            binding.goalsEditGoalGroup.visibility = View.GONE
+        }
+    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)

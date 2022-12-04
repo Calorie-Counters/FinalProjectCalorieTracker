@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.tasks.await
 import project.st991377867.marcin.data.FirebaseUserLiveData
 import project.st991377867.marcin.data.model.DailyCalorieIntake
 import java.text.DateFormat
@@ -24,7 +25,7 @@ class HistoryViewModel : ViewModel() {
     val historyList: MutableLiveData<List<DailyCalorieIntake>> = MutableLiveData()
 
 
-    fun recentHistory(duration: Int) :MutableMap<String, DailyCalorieIntake> {
+    suspend fun recentHistory(duration: Int) :MutableMap<String, DailyCalorieIntake> {
 
         var dailyCalorieMap: MutableMap<String, DailyCalorieIntake> = mutableMapOf()
 
@@ -78,6 +79,7 @@ class HistoryViewModel : ViewModel() {
                         }
                     }
                 }
+                .await()
         }
         return dailyCalorieMap
     }

@@ -46,7 +46,6 @@ class HistoryFragment : Fragment() {
 
             MainScope().launch() {
                 val list: List<DailyCalorieIntake> = viewModel.recentHistory(7).values.toList()
-                delay(1000)
                 refreshList(list)
             }
         }
@@ -54,7 +53,6 @@ class HistoryFragment : Fragment() {
         binding.thirtyDays.setOnClickListener {
             MainScope().launch() {
                 val list: List<DailyCalorieIntake> = viewModel.recentHistory(30).values.toList()
-                delay(1000)
                 refreshList(list)
             }
         }
