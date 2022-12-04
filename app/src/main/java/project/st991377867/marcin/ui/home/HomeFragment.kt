@@ -1,31 +1,17 @@
 package project.st991377867.marcin.ui.home
 
-import androidx.lifecycle.ViewModelProvider
+
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.LiveData
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.firestore.FirebaseFirestore
-import project.st991377867.marcin.R
 import project.st991377867.marcin.adapters.ItemAdapter
-import project.st991377867.marcin.adapters.ReminderListAdapter
-import project.st991377867.marcin.data.model.Item
-import project.st991377867.marcin.data.model.Reminder
 import project.st991377867.marcin.databinding.FragmentHomeBinding
-import project.st991377867.marcin.databinding.FragmentItemBinding
-import project.st991377867.marcin.databinding.FragmentNotificationsBinding
-import project.st991377867.marcin.databinding.FragmentRemindersBinding
-import project.st991377867.marcin.ui.item.ItemRecyclerView
 import project.st991377867.marcin.ui.item.ItemViewModel
-import project.st991377867.marcin.ui.reminders.RemindersFragmentDirections
 
 
 class HomeFragment : Fragment() {
@@ -37,7 +23,7 @@ class HomeFragment : Fragment() {
 
     private val viewModel: ItemViewModel by viewModels()
     private lateinit var binding: FragmentHomeBinding
-    private lateinit var itemRecyclerView: ItemRecyclerView
+    //private lateinit var itemRecyclerView: ItemRecyclerView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
