@@ -46,7 +46,7 @@ class HistoryRecyclerView (private val recordList: List<DailyCalorieIntake>) : R
                     itemName = recordList[position].items[i].itemName
                 }
 
-                displayText.append(String.format("%16s\t%20s\t%d\t%d",
+                displayText.append(String.format("%16s\t%20s\t%.1f\t%d",
                     dateLongFormat.format(recordList[position].items[i].date),
                     itemName,
                     recordList[position].items[i].itemQuantity,
