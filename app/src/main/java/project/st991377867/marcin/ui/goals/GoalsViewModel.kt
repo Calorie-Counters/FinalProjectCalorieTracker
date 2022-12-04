@@ -71,13 +71,13 @@ class GoalsViewModel : ViewModel() {
 
     suspend fun deleteGoal(){
         if (goal != null){
-            fireStoreDatabase.collection("goal")
+            Log.d("GoalsFragment", "id: ${goal?.id}")
+            fireStoreDatabase.collection("goals")
                 .document(goal!!.id)
                 .delete()
                 .addOnCompleteListener {
                     if (it.isSuccessful) {
                         Log.d("GoalsFragment", "Goal Deleted")
-                        goal = null
                     }
                 }
                 .await()
