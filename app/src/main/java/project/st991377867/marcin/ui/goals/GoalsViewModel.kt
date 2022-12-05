@@ -15,6 +15,7 @@ import java.text.DateFormat
 import java.util.Date
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import kotlin.math.roundToInt
 
 class GoalsViewModel : ViewModel() {
     val fireStoreDatabase = FirebaseFirestore.getInstance();
@@ -83,6 +84,53 @@ class GoalsViewModel : ViewModel() {
                 .await()
         }
     }
+
+
+    suspend fun getDailyCalorie() : Int {
+        var c: Int = 0
+        val cdate = Calendar.getInstance()
+        cdate.set(Calendar.HOUR_OF_DAY, 0)
+        cdate.set(Calendar.MINUTE, 0)
+        cdate.set(Calendar.SECOND, 0)
+        cdate.set(Calendar.MILLISECOND, 0)
+        val today: Date = cdate.time
+
+        val cdate2 = Calendar.getInstance()
+        cdate2.set(Calendar.HOUR_OF_DAY, 0)
+        cdate2.set(Calendar.MINUTE, 0)
+        cdate2.set(Calendar.SECOND, 0)
+        cdate2.set(Calendar.MILLISECOND, 0)
+        cdate2.add(Calendar.DAY_OF_YEAR, 1)
+        val tomorrow: Date = cdate2.time
+
+        if (firebaseUserID != null){
+            fireStoreDatabase.collection("items")
+                .whereEqualTo("uid", firebaseUserID)
+                .whereGreaterThanOrEqualTo("timestamp", today)
+                .whereLessThan("timestamp", tomorrow)
+                .get()
+                .addOnCompleteListener {
+                    if (it.isSuccessful){
+                        for (document in it.result){
+                            try {
+                                val calorie: Int = document.data.getValue("itemCalorie").toString().toInt()
+                                val quantity: Double = document.data.getValue("itemQuantity").toString().toDouble()
+
+                                val amount: Int = (calorie * quantity).roundToInt()
+
+                                c += amount
+                            } catch (e: Exception){
+                                Log.d("GoalsFragment", "${e.message}")
+                            }
+                        }
+                    }
+                }
+                .await()
+        }
+
+        return c
+    }
+
 
     suspend fun fetchGoal(): Goal?{
         goal = null

@@ -95,13 +95,14 @@ class GoalsFragment : Fragment() {
 
     suspend fun populate(){
         goal = viewModel.fetchGoal()
+        val dailyCalorieCount: Int = viewModel.getDailyCalorie()
         if (goal == null){
             binding.goalsNoGoalGroup.visibility = View.VISIBLE
             binding.goalsDisplayGoalGroup.visibility = View.GONE
             binding.goalsEditGoalGroup.visibility = View.GONE
         } else {
             binding.goalsDailyCalorieGoal.text = goal!!.calories
-            binding.goalsDailyCalorieActual.text = "0"// change
+            binding.goalsDailyCalorieActual.text = dailyCalorieCount.toString()// change
             binding.goalsSetDate.text = goal!!.date
             binding.goalsStatement.text = goal!!.goal
 
