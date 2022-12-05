@@ -1,8 +1,10 @@
 package project.st991377867.marcin.ui.login
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
 import project.st991377867.marcin.data.FirebaseUserLiveData
+import project.st991377867.marcin.data.model.User
 
 class LoginViewModel : ViewModel() {
 
@@ -21,6 +23,10 @@ class LoginViewModel : ViewModel() {
         } else {
             AuthenticationState.UNAUTHENTICATED
         }
+    }
+
+    fun addUserData(user: User) {
+        User.updateUserData(user)
     }
 
 }
