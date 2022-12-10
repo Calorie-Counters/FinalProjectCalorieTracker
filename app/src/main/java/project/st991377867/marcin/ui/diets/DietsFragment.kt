@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import project.st991377867.marcin.databinding.FragmentDietsBinding
 import project.st991377867.marcin.adapters.DietListAdapter
+import project.st991377867.marcin.data.model.User
 
 class DietsFragment : Fragment() {
 
@@ -31,6 +32,14 @@ class DietsFragment : Fragment() {
         binding = FragmentDietsBinding.inflate(inflater, container, false)
         recordRecyclerView = binding.recyclerView
 
+        binding.fab.setImageResource(android.R.drawable.ic_input_add)
+        binding.fab.visibility = if (User.isAdmin()) View.VISIBLE else View.GONE
+        // prevent from clicking behind the fab
+        binding.fab.setOnClickListener {
+            val action = DietsFragmentDirections.actionNavDietsToNavDietDetail("New Diet")
+            this.findNavController().navigate(action)
+        }
+
         return binding.root
     }
 
@@ -38,7 +47,7 @@ class DietsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val adapter = DietListAdapter {
-            val action = DietsFragmentDirections.actionNavDietsToNavDietDetail(it.id)
+            val action = DietsFragmentDirections.actionNavDietsToNavDietDetail("Edit Diet", it.id)
             this.findNavController().navigate(action)
         }
         viewModel.requestDiets()

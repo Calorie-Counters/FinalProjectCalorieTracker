@@ -25,7 +25,7 @@
             android:layout_gravity="bottom|end"
             android:layout_marginEnd="@dimen/fab_margin"
             android:layout_marginBottom="16dp"
-            android:src="@drawable/ic_add_foreground"
+            android:src="@android:drawable/ic_input_add"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
