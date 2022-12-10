@@ -103,8 +103,11 @@
     <fragment
         android:id="@+id/nav_diet_detail"
         android:name="project.st991377867.marcin.ui.diets.DietDetailsFragment"
-        android:label="Diet Details"
+        android:label="{title}"
         tools:layout="@layout/fragment_diet_details" >
+        <argument
+            android:name="title"
+            app:argType="string" />
         <argument
             android:name="diet_id"
             android:defaultValue="-1"

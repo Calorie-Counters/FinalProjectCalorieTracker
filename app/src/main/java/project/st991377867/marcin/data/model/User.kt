@@ -16,6 +16,9 @@ class User {
     val uid: String
         get() = field
 
+    var role: String
+        get() = field
+
     var displayName: String
         get() = field
 
@@ -52,6 +55,7 @@ class User {
 
     constructor(uid: String) {
         this.uid = uid
+        this.role = "user"
         displayName = FirebaseAuth.getInstance().currentUser!!.displayName!!
         firstName = ""
         lastName = ""
@@ -71,6 +75,8 @@ class User {
         private var syncFlagLiveData: MutableLiveData<Boolean> = MutableLiveData(false)
 
         fun isSynced() : LiveData<Boolean> { return syncFlagLiveData }
+
+        fun isAdmin() : Boolean { return user.role == "admin" }
 
         fun getUser(request: Boolean = true) : User {
             if (request) { requestUserData() }
@@ -115,12 +121,13 @@ class User {
                 .addOnSuccessListener { document ->
                     if (document != null) {
                         Log.i(TAG, "DocumentSnapshot data: ${document.data}")
-                        user.firstName = document.data?.get("firstName").toString()
-                        user.lastName = document.data?.get("lastName").toString()
-                        user.address = document.data?.get("address").toString()
-                        user.city = document.data?.get("city").toString()
-                        user.country = document.data?.get("country").toString()
-                        user.postalCode = document.data?.get("postalCode").toString()
+                        user.role = if (document.data?.get("role") != null) document.data?.get("role") as String else "user"
+                        user.firstName = if (document.data?.get("firstName") != null) document.data?.get("firstName") as String else ""
+                        user.lastName = if (document.data?.get("lastName") != null) document.data?.get("lastName") as String else ""
+                        user.address = if (document.data?.get("address") != null) document.data?.get("address") as String else ""
+                        user.city = if (document.data?.get("city") != null) document.data?.get("city") as String else ""
+                        user.country = if (document.data?.get("country") != null) document.data?.get("country") as String else ""
+                        user.postalCode = if (document.data?.get("postalCode") != null) document.data?.get("postalCode") as String else ""
                         userLiveData.value = user
                         Log.i(TAG, "UserliveData value: ${userLiveData.value!!.firstName}")
                     } else {
@@ -144,6 +151,7 @@ class User {
         private fun getUserHashMap(user: User) : HashMap<String, Any> {
             val userMap = HashMap<String, Any>()
             userMap["uid"] = user.uid
+            userMap["role"] = user.role
             userMap["firstName"] = user.firstName
             userMap["lastName"] = user.lastName
             userMap["address"] = user.address
