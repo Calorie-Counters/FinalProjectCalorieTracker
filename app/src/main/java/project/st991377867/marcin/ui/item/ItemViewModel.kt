@@ -10,7 +10,6 @@ import project.st991377867.marcin.data.model.Item
 
 
 import project.st991377867.marcin.ui.login.LoginFragment.Companion.TAG
-import java.text.DateFormat
 import java.util.*
 import kotlin.collections.HashMap
 
@@ -46,8 +45,8 @@ class ItemViewModel : ViewModel() {
                                 val itemQuantity = document.data.getValue("itemQuantity") as String
                                 val itemCalorie = document.data.getValue("itemCalorie") as String
                                 val itemDescription = document.data.getValue("itemDescription") as String
-                                val timestamp = document.data.getValue("timestamp") as String
-                                val item = Item(id, uid, itemName, itemWeight, itemQuantity, itemCalorie, itemDescription, timestamp)
+
+                                val item = Item(id, uid, itemName, itemWeight, itemQuantity, itemCalorie, itemDescription)
                                 itemLiveData.value = item
 
                             } catch (e: Exception) {
@@ -80,8 +79,8 @@ class ItemViewModel : ViewModel() {
                                 val itemQuantity = document.data.getValue("itemQuantity") as String
                                 val itemCalorie = document.data.getValue("itemCalorie") as String
                                 val itemDescription = document.data.getValue("itemDescription") as String
-                                val timestamp = document.data.getValue("timestamp") as String
-                                val item = Item(id, uid, itemName, itemWeight, itemQuantity, itemCalorie, itemDescription, timestamp)
+
+                                val item = Item(id, uid, itemName, itemWeight, itemQuantity, itemCalorie, itemDescription)
                                 itemList.add(item)
 
                             } catch (e: Exception) {
@@ -98,9 +97,8 @@ class ItemViewModel : ViewModel() {
 
 
     fun newItem() : LiveData<Item> {
-        val currentDateTimeString = DateFormat.getDateTimeInstance().format(Date())
         val id = fireStoreDatabase.collection("items").document().id
-        val item = Item(id,firebaseUserID!!,"","", "", "", "", currentDateTimeString)
+        val item = Item(id,firebaseUserID!!,"","", "", "", "")
         itemLiveData as MutableLiveData
         itemLiveData.value = item
         return itemLiveData
@@ -136,6 +134,7 @@ class ItemViewModel : ViewModel() {
     }
 
     private fun itemToHashMap(item: Item): HashMap<String, Any> {
+        val currentDateTime = Calendar.getInstance().time
         val itemHashMap = HashMap<String, Any>()
         itemHashMap["id"] = item.id
         itemHashMap["uid"] = item.uid
@@ -144,7 +143,7 @@ class ItemViewModel : ViewModel() {
         itemHashMap["itemQuantity"] = item.item_quantity
         itemHashMap["itemCalorie"] = item.item_calorie
         itemHashMap["itemDescription"] = item.item_description
-        itemHashMap["timestamp"] = item.timestamp
+        itemHashMap["timestamp"] = currentDateTime
         return itemHashMap
     }
 

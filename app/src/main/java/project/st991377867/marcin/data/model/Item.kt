@@ -10,7 +10,7 @@ class Item{
     var item_quantity: String
     var item_calorie: String
     var item_description: String
-    var timestamp: String
+
 
     constructor() {
         id = ""
@@ -20,10 +20,9 @@ class Item{
         item_quantity = ""
         item_calorie = ""
         item_description = ""
-        timestamp = ""
     }
 
-    constructor(id: String, uid: String, name: String, weight: String, quantity: String, calorie: String, description: String, timestamp: String) {
+    constructor(id: String, uid: String, name: String, weight: String, quantity: String, calorie: String, description: String) {
         this.id = id
         this.uid = uid
         this.item_name = name
@@ -31,11 +30,10 @@ class Item{
         this.item_quantity = quantity
         this.item_calorie = calorie
         this.item_description = description
-        this.timestamp = timestamp
     }
 
     override fun toString(): String {
-        return "Item(id='$id', uid='$uid', item_name='$item_name', item_weight='$item_weight', item_quantity='$item_quantity', item_calorie='$item_calorie', item_description='$item_description', timestamp='$timestamp')"
+        return "Item(id='$id', uid='$uid', item_name='$item_name', item_weight='$item_weight', item_quantity='$item_quantity', item_calorie='$item_calorie', item_description='$item_description')"
     }
 
 
