@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#EDE7F6"
+    android:gravity="center">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+        <ImageView
+            android:id="@+id/background"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerInParent="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/circle_shape" />
+
+        <ImageView
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:scaleType="fitCenter"
+            android:layout_width="wrap_content"
+            android:layout_centerInParent="true"
+            android:id="@+id/logo"
+            android:src="@drawable/logo"/>
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="About CalorieTracker"
+        android:textSize="24sp"
+        android:padding="8dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="16dp"
+        android:text="CalorieTracker is a simple and easy-to-use application designed to help you keep track of your daily caloric intake and stay on track with your health and fitness goals. With a comprehensive database of food and drinks, you can easily log your meals and snacks to monitor your caloric intake and make healthier choices."
+        android:textAlignment="center"
+        android:textSize="16sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Marcin Koziel; 991377867\nRole: Developer"
+        android:textSize="16sp"
+        android:textAlignment="center"
+        android:padding="8dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Jordan Graham; 991576506\nRole: Developer"
+        android:textSize="16sp"
+        android:textAlignment="center"
+        android:padding="8dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ningfan Chen; 991601589\nRole: Developer"
+        android:textSize="16sp"
+        android:textAlignment="center"
+        android:padding="8dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submission Date: 12/11/2022"
+        android:textSize="14sp"
+        android:textAlignment="center"
+        android:paddingTop="16dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Developed by Team CalorieCounters"
+        android:textSize="16sp"
+        android:padding="8dp" />
+
+</LinearLayout>
