@@ -41,8 +41,14 @@ class GoalsFragment : Fragment() {
         viewModel = GoalsViewModel()
 
         MainScope().launch {
+            viewModel.run()
+            viewModel.currentGoal.observe(viewLifecycleOwner){
+                goalObserved(it)
+            }
             populate()
         }
+
+
         // save/update goal
         binding.goalsEditSaveButton.setOnClickListener {
             val goalStatement: String = binding.goalsEditGoalStatement.text.toString()
@@ -52,7 +58,7 @@ class GoalsFragment : Fragment() {
                 MainScope().launch {
 
                     viewModel.setNewGoal(goalStatement, calorie.toInt())
-
+                    viewModel.run()
                     populate()
                     binding.goalsEditGoalStatement.setText("")
                     binding.goalsEditCalorieTargetET.setText("")
@@ -73,6 +79,7 @@ class GoalsFragment : Fragment() {
         binding.goalsDeleteButton.setOnClickListener {
             MainScope().launch {
                 viewModel.deleteGoal()
+                goal = null
                 populate()
             }
         }
@@ -88,24 +95,31 @@ class GoalsFragment : Fragment() {
     }
 
     suspend fun populate(){
-        goal = viewModel.fetchGoal()
-        val dailyCalorieCount: Int = viewModel.getDailyCalorie()
-        if (goal == null){
-            binding.goalsNoGoalGroup.visibility = View.VISIBLE
-            binding.goalsDisplayGoalGroup.visibility = View.GONE
-            binding.goalsEditGoalGroup.visibility = View.GONE
-        } else {
-            binding.goalsDailyCalorieGoal.text = goal!!.calories
-            binding.goalsDailyCalorieActual.text = dailyCalorieCount.toString()// change
-            binding.goalsSetDate.text = goal!!.date
-            binding.goalsStatement.text = goal!!.goal
+        MainScope().launch {
+            val dailyCalorieCount: Int = viewModel.getDailyCalorie()
+            if (goal == null){
+                binding.goalsNoGoalGroup.visibility = View.VISIBLE
+                binding.goalsDisplayGoalGroup.visibility = View.GONE
+                binding.goalsEditGoalGroup.visibility = View.GONE
+            } else {
+                binding.goalsDailyCalorieGoal.text = goal!!.calories
+                binding.goalsDailyCalorieActual.text = dailyCalorieCount.toString()// change
+                binding.goalsSetDate.text = goal!!.date
+                binding.goalsStatement.text = goal!!.goal
 
-            binding.goalsDisplayGoalGroup.visibility = View.VISIBLE
-            binding.goalsNoGoalGroup.visibility = View.GONE
-            binding.goalsEditGoalGroup.visibility = View.GONE
+                binding.goalsDisplayGoalGroup.visibility = View.VISIBLE
+                binding.goalsNoGoalGroup.visibility = View.GONE
+                binding.goalsEditGoalGroup.visibility = View.GONE
+            }
         }
     }
 
+    fun goalObserved(g: Goal){
+        MainScope().launch {
+            goal = g
+            populate()
+        }
+    }
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(GoalsViewModel::class.java)

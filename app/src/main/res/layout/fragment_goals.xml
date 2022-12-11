@@ -32,8 +32,16 @@
                 android:layout_height="match_parent"
                 android:visibility="gone"
                 app:constraint_referenced_ids="goalsDailyCalorieLabel, goalsDailyCalorieActual
-                , goalsDailyCalorieGoal, goalsDailyCalorieSeparator, goalsDailyStatus, goalsSetDate
-                , goalsStatementLabel, goalsStatement, goalsSetDateLabel, goalsEditButton, goalsDeleteButton" />
+                , goalsDailyCalorieGoal, goalsDailyCalorieSeparator, goalsSetDate
+                , goalsStatementLabel, goalsStatement, goalsSetDateLabel, goalsEditButton, goalsDeleteButton"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="0dp" />
+    <!--        <androidx.constraintlayout.widget.Group
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="visible"
+                android:id="@+id/goalsIcon"
+                app:constraint_referenced_ids="logo, goalsDailyStatus"/>-->
 
             <androidx.constraintlayout.widget.Group
                 android:id="@+id/goalsEditGoalGroup"
@@ -112,13 +120,23 @@
                 android:text="1350" />
             <ImageView
                 android:id="@+id/goalsDailyStatus"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                app:layout_constraintLeft_toLeftOf="@id/goalsDailyCalorieGoal"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:layout_constraintLeft_toLeftOf="@id/goalsConstraintLayout"
                 app:layout_constraintRight_toRightOf="@id/goalsConstraintLayout"
-                app:layout_constraintTop_toTopOf="@id/goalsDailyCalorieLabel"
+                app:layout_constraintTop_toTopOf="@id/goalsConstraintLayout"
                 app:layout_constraintBottom_toBottomOf="@id/goalsDailyCalorieLabel"
                 android:background="@drawable/circle_shape"/>
+            <ImageView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:scaleType="fitCenter"
+                app:layout_constraintLeft_toLeftOf="@id/goalsConstraintLayout"
+                app:layout_constraintRight_toRightOf="@id/goalsConstraintLayout"
+                app:layout_constraintTop_toTopOf="@id/goalsConstraintLayout"
+                app:layout_constraintBottom_toBottomOf="@id/goalsDailyCalorieLabel"
+                android:id="@+id/logo"
+                android:src="@drawable/logo"/>
             <TextView
                 android:id="@+id/goalsSetDateLabel"
                 android:layout_width="wrap_content"
@@ -188,6 +206,7 @@
                 android:id="@+id/goalsEditCalorieLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
                 app:layout_constraintLeft_toLeftOf="@id/goalsConstraintLayout"
                 app:layout_constraintRight_toLeftOf="@+id/goalsEditCalorieTargetET"
                 app:layout_constraintTop_toTopOf="@id/goalsConstraintLayout"

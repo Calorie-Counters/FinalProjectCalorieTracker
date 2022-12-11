@@ -2,6 +2,8 @@ package project.st991377867.marcin.ui.goals
 
 import android.util.Log
 import android.widget.Toast
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
@@ -15,6 +17,7 @@ import java.text.DateFormat
 import java.util.Date
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Currency
 import kotlin.math.roundToInt
 
 class GoalsViewModel : ViewModel() {
@@ -23,7 +26,40 @@ class GoalsViewModel : ViewModel() {
     val firebaseUserID = FirebaseAuth.getInstance().currentUser?.uid
     val dateFormat: DateFormat = SimpleDateFormat("dd/MM/yyyy")
     var goal: Goal? = null
-    //var pastGoals: MutableMap<String, Goal> = mutableMapOf()
+
+    protected val _currentGoal: MutableLiveData<Goal> = MutableLiveData<Goal>()
+
+    val currentGoal: LiveData<Goal>
+        get() = _currentGoal
+
+
+    suspend fun run(){
+
+        if (firebaseUserID != null){
+            //val goal: Goal? = fetchDocs()
+            var goal: Goal
+            //Log.d("GoalsFragment", "goal: ${_currentGoal.value?.id} Statement: ${_currentGoal.value?.goal}")
+            fireStoreDatabase.collection("goals")
+                .whereEqualTo("uid", firebaseUserID)
+                .get()
+                .addOnCompleteListener {
+                    if (it.isSuccessful){
+                        var goalDateMarker: Date = Calendar.getInstance().time
+                        for (document in it.result){
+                            val id = document.id
+                            val uid = document.data.getValue("uid").toString()
+                            val goalStatement = document.data.getValue("goal").toString()
+                            val calories = document.data.getValue("calories").toString()
+                            val date = (document.data.getValue("timestamp") as Timestamp).toDate()
+                            goal = Goal(id, uid, goalStatement, calories, dateFormat.format(date))
+                            Log.d("GoalsFragment", "goal: ${id} Statement: ${goalStatement}")
+                            _currentGoal.value = goal
+                        }
+                    }
+                }
+                .await()
+        }
+    }
 
     fun setNewGoal(goalStatement: String, goalCalories: Int){
         /*val nGoal: MutableMap<String, Any> = HashMap()
@@ -37,9 +73,9 @@ class GoalsViewModel : ViewModel() {
         val gdate: Date = cdate.time
 
         if (firebaseUserID != null){
-            if (goal != null){
+            if (currentGoal.value != null){
 
-                val newGoal: Goal = Goal(goal!!.id, firebaseUserID, goalStatement, goalCalories.toString(), gdate.toString())
+                val newGoal: Goal = Goal(currentGoal.value!!.id, firebaseUserID, goalStatement, goalCalories.toString(), gdate.toString())
                 fireStoreDatabase.collection("goals")
                     .document(newGoal.id)
                     .update("goal", newGoal.goal,
@@ -71,10 +107,11 @@ class GoalsViewModel : ViewModel() {
     }
 
     suspend fun deleteGoal(){
-        if (goal != null){
-            Log.d("GoalsFragment", "id: ${goal?.id}")
+        run()
+        if (currentGoal.value != null){
+            Log.d("GoalsFragment", "id: ${currentGoal.value?.id}")
             fireStoreDatabase.collection("goals")
-                .document(goal!!.id)
+                .document(currentGoal.value!!.id)
                 .delete()
                 .addOnCompleteListener {
                     if (it.isSuccessful) {

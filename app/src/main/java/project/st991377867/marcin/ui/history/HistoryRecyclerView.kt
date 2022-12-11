@@ -38,6 +38,7 @@ class HistoryRecyclerView (private val recordList: List<DailyCalorieIntake>) : R
         } else {
             val displayText: StringBuffer = StringBuffer()
             displayText.append(String.format("\n%-32s\t%-20s\t%-10s\t%-10s\n","Date","Item Name", "Quantity", "Calories"))
+            displayText.append(String.format("%100s\n","").replace(" ", "-"))
             for (i in 0 .. recordList[position].items.size - 1){
                 val itemName: String
                 if (recordList[position].items[i].itemName.length > 20){
