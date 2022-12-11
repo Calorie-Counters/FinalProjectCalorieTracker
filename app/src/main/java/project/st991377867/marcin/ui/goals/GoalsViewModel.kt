@@ -144,7 +144,6 @@ class GoalsViewModel : ViewModel() {
                     if (it.isSuccessful){
                         var goalDateMarker: Date = Calendar.getInstance().time
                         for (document in it.result){
-                            //if (goal == null){
                                 val id = document.id
                                 val uid = document.data.getValue("uid").toString()
                                 val goalStatement = document.data.getValue("goal").toString()
@@ -152,22 +151,6 @@ class GoalsViewModel : ViewModel() {
                                 val date = (document.data.getValue("timestamp") as Timestamp).toDate()
                                 goal = Goal(id, uid, goalStatement, calories, dateFormat.format(date))
                                 Log.d("GoalsFragment", "goal: ${id} Statement: ${goalStatement}")
-                                //goalDateMarker = date
-                            //}
-                            /*else {
-                                *//**//*val curDate: Date = Date.from()*//**//*
-
-                                // get the most recent date
-                                val newDate: Date = (document.data.getValue("date") as Timestamp).toDate()
-                                if (newDate.after(goalDateMarker)){
-                                    val id = document.id
-                                    val uid = document.data.getValue("uid").toString()
-                                    val goalStatement = document.data.getValue("goal").toString()
-                                    val calories = document.data.getValue("calories").toString()
-                                    goal = Goal(id, uid, goalStatement, calories, dateFormat.format(newDate))
-                                    goalDateMarker = newDate
-                                }
-                            }*/
                         }
                     }
                 }
