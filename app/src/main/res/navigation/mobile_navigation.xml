@@ -119,7 +119,22 @@
         android:id="@+id/nav_help"
         android:name="project.st991377867.marcin.ui.help.HelpFragment"
         android:label="fragment_help"
-        tools:layout="@layout/fragment_help"/>
+        tools:layout="@layout/fragment_help">
+        <action
+            android:id="@+id/action_helpFragment_to_nav_help_edit"
+            app:destination="@+id/nav_help_edit"/>
+    </fragment>
+    <fragment
+        android:id="@+id/nav_help_edit"
+        android:name="project.st991377867.marcin.ui.help.HelpEditFragment"
+        android:label="fragment_help_edit"
+        tools:layout="@layout/fragment_help_edit">
+        <action
+            android:id="@+id/action_helpEditFragment_to_nav_help"
+            app:destination="@+id/nav_help"
+            app:popUpTo="@id/nav_help"
+            app:popUpToInclusive="true"/>
+    </fragment>
 
 
 </navigation>
