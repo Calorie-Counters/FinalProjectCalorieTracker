@@ -1,4 +1,6 @@
 package project.st991377867.marcin.ui.help
 
-class HelpViewModel {
+import androidx.lifecycle.ViewModel
+
+class HelpViewModel : ViewModel() {
 }

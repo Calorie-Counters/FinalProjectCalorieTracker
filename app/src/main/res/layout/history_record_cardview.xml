@@ -4,7 +4,8 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardElevation="50dp"
-    app:cardCornerRadius="10dp">
+    app:cardCornerRadius="10dp"
+    android:padding="5dp">
 
     <RelativeLayout
         android:layout_width="match_parent"

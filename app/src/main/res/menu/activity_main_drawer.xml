@@ -20,6 +20,10 @@
             android:id="@+id/nav_reminders"
             android:icon="@drawable/ic_nav_reminders_foreground"
             android:title="@string/menu_reminders" />
+        <item
+            android:id="@+id/nav_help"
+            android:icon="@drawable/ic_nav_history_foreground"
+            android:title="@string/menu_help"/>
 <!--        <item-->
 <!--            android:id="@+id/nav_notifications"-->
 <!--            android:icon="@drawable/ic_nav_notifications_foreground"-->
