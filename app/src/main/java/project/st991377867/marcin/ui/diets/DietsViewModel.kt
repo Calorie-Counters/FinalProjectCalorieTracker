@@ -19,9 +19,10 @@ class DietsViewModel : ViewModel() {
     val dietLiveData: LiveData<Diet> = MutableLiveData()
 
     fun requestDiet(id: String) : LiveData<Diet> {
-        val dietLiveData: MutableLiveData<Diet> = MutableLiveData()
+        val tmpDietLiveData: MutableLiveData<Diet> = MutableLiveData()
         if (firebaseUserID != null){
             fireStoreDatabase.collection("diets")
+                .whereEqualTo("id", id)
                 .get()
                 .addOnCompleteListener {
                     Log.d(TAG, "requestDiet: ${it.result}")
@@ -37,7 +38,7 @@ class DietsViewModel : ViewModel() {
                                 val instructions = document.data.getValue("instructions") as String
                                 val duration = document.data.getValue("duration") as String
                                 val diet = Diet(id, name, description, type, calories, ingredients, instructions, duration)
-                                dietLiveData.value = diet
+                                tmpDietLiveData.value = diet
                             } catch (e: Exception) {
                                 Log.d(TAG, "requestDiet: ${e.message}")
                             }
@@ -47,7 +48,7 @@ class DietsViewModel : ViewModel() {
                     }
                 }
         }
-        return dietLiveData
+        return tmpDietLiveData
     }
 
     fun requestDiets(limit: Int = 50): LiveData<List<Diet>> {
@@ -115,11 +116,19 @@ class DietsViewModel : ViewModel() {
         }
     }
 
-    fun newDiet() : LiveData<Diet> {
-        val id = fireStoreDatabase.collection("diets").document().id
-        val diet = Diet(id, "", "", "", "", "", "", "")
+    fun setDiet(diet: Diet) {
         (dietLiveData as MutableLiveData).value = diet
-        return dietLiveData
+        if (dietLiveData.value?.id == "") {
+            dietLiveData.value?.id = fireStoreDatabase.collection("diets").document().id
+        }
+    }
+
+    fun isDietValid() : Boolean {
+        val diet = (dietLiveData as MutableLiveData).value!!
+        return diet.name.isNotEmpty() && diet.description.isNotEmpty() &&
+                diet.type.isNotEmpty() && diet.calories.isNotEmpty() &&
+                diet.ingredients.isNotEmpty() && diet.instructions.isNotEmpty() &&
+                diet.duration.isNotEmpty()
     }
 
     private fun clearList() {

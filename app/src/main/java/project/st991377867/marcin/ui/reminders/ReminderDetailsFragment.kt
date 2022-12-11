@@ -44,42 +44,54 @@ class ReminderDetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val id = navigationArgs.reminderId
 
+        // If a reminder id was passed as an argument
         if (id != "-1") {
+            // Hide the "Add" button
             binding.buttonAdd.visibility = View.GONE
+            // Request the reminder with the given id and observe the result
             viewModel.requestReminder(id).observe(viewLifecycleOwner) {
+                // Bind the reminder to the layout
                 binding.reminder = it
             }
+            // Set up the "Save" button
             binding.buttonSave.setOnClickListener {
                 updateReminder()
             }
+            // Set up the "Delete" button
             binding.buttonDelete.setOnClickListener {
                 showConfirmationDialog()
             }
         } else {
+            // Request a new reminder and observe the result
             viewModel.newReminder().observe(viewLifecycleOwner) {
                 reminder = it
+                // Bind the reminder to the layout
                 binding.reminder = reminder
             }
+            // Hide the "Edit" buttons
             binding.reminderDetailsEditButtons.visibility = View.GONE
+            // Set up the "Add" button
             binding.buttonAdd.setOnClickListener {
                 updateReminder()
             }
         }
 
-        // date picker
+        // Set up the date picker
         binding.editTextDate.isEnabled = false
         binding.imageViewCalendar.setOnClickListener {
             showDatePickerDialog(it)
         }
+        // Observe the selected date and update the corresponding text view
         viewModel.reminderDateLiveData.observe(viewLifecycleOwner) {
             binding.editTextDate.setText(it)
         }
 
-        // time picker
+        // Set up the time picker
         binding.editTextTime.isEnabled = false
         binding.imageViewTime.setOnClickListener {
             showTimePickerDialog(it)
         }
+        // Observe the selected time and update the corresponding text view
         viewModel.reminderTimeLiveData.observe(viewLifecycleOwner) {
             binding.editTextTime.setText(it)
         }

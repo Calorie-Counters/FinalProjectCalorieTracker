@@ -20,6 +20,11 @@ import project.st991377867.marcin.R
 import project.st991377867.marcin.data.model.User
 import project.st991377867.marcin.databinding.FragmentLoginBinding
 
+/**
+ * Login fragment
+ *
+ * @constructor Create empty Login fragment
+ */
 class LoginFragment : Fragment() {
 
     companion object {
@@ -30,11 +35,18 @@ class LoginFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = DataBindingUtil.inflate<FragmentLoginBinding>(inflater, R.layout.fragment_login, container, false)
+        val binding = DataBindingUtil.inflate<FragmentLoginBinding>(
+            inflater, R.layout.fragment_login, container, false)
         binding.authButton.setOnClickListener { launchSignInFlow() }
         return binding.root
     }
 
+
+    /**
+     * On resume
+     * if user is already logged in, navigate to home fragment
+     * else, stay on login fragment and disable navigation
+     */
     override fun onResume() {
         super.onResume()
         if (FirebaseAuth.getInstance().currentUser != null) {
@@ -46,6 +58,15 @@ class LoginFragment : Fragment() {
         }
     }
 
+
+    /**
+     * On activity result
+     * if user is logged in successfully, navigate to home fragment
+     *
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @SuppressLint("ResourceType")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -71,6 +92,9 @@ class LoginFragment : Fragment() {
         }
     }
 
+    /**
+     * Launch sign in flow
+     */
     private fun launchSignInFlow() {
         // Give users the option to sign in / register with their email or Google account.
         // If users choose to register with their email,
@@ -91,6 +115,11 @@ class LoginFragment : Fragment() {
         )
     }
 
+    /**
+     * Redirect to fragment
+     *
+     * @param id fragment id
+     */
     private fun redirectToFragment(fragmentId: Int) {
         activity?.findViewById<View>(R.id.btm_nav_view)?.visibility = View.VISIBLE
         (activity as MainActivity).toggleDrawer(true)
