@@ -37,6 +37,7 @@ class ReminderListAdapter(private val onReminderClicked: (Reminder) -> Unit) :
                 reminderTitle.text = reminder.title
                 reminderDescription.text = reminder.description
                 reminderDate.text = reminder.date
+                reminderTime.text = reminder.time
             }
         }
     }
