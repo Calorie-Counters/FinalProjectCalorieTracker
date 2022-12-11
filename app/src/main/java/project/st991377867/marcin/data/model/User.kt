@@ -65,6 +65,11 @@ class User {
         country = ""
         postalCode = ""
         goals = listOf()
+        Log.d("User", "User created!")
+    }
+
+    override fun toString(): String {
+        return "User(uid='$uid', role='$role', displayName='$displayName', firstName='$firstName', lastName='$lastName', address='$address', city='$city', country='$country', postalCode='$postalCode', goals=$goals, email='$email')"
     }
 
     companion object {
@@ -89,7 +94,8 @@ class User {
          * @return LiveData<User>
          */
         fun requestLiveUserData() : LiveData<User> {
-            requestUserData()
+            user = requestUserData()
+            userLiveData = MutableLiveData(user)
             return userLiveData
         }
 
@@ -112,11 +118,13 @@ class User {
          * Request user data from Firestore
          *
          */
-        private fun requestUserData() {
-            Log.i(TAG, "User: ${user}")
+        private fun requestUserData() : User {
             syncFlagLiveData.value = false
+            var tmpUser: User = user
+            val uid = FirebaseAuth.getInstance().currentUser!!.uid
+            if (user.uid != uid) { tmpUser = User(uid) }
             val db = FirebaseFirestore.getInstance()
-            val docRef = db.collection("users").document(user.uid)
+            val docRef = db.collection("users").document(uid)
             docRef.get()
                 .addOnSuccessListener { document ->
                     if (document != null) {
@@ -128,8 +136,6 @@ class User {
                         user.city = if (document.data?.get("city") != null) document.data?.get("city") as String else ""
                         user.country = if (document.data?.get("country") != null) document.data?.get("country") as String else ""
                         user.postalCode = if (document.data?.get("postalCode") != null) document.data?.get("postalCode") as String else ""
-                        userLiveData.value = user
-                        Log.i(TAG, "UserliveData value: ${userLiveData.value!!.firstName}")
                     } else {
                         updateUserData(user)
                         Log.i(TAG, "No such document")
@@ -140,6 +146,7 @@ class User {
                     Log.i(TAG, "get failed with ", exception)
                     syncFlagLiveData.value = true
                 }
+            return tmpUser
         }
 
         /**

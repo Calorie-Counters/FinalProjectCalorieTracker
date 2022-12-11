@@ -98,6 +98,7 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         if (FirebaseAuth.getInstance().currentUser != null) {
             user = User.requestLiveUserData()
+            Log.d(TAG, "User is logged in: ${user.value}")
             setDrawerFields(user)
         } else {
             NavHostFragment.findNavController(
