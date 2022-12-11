@@ -42,7 +42,10 @@ class DietDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val id = navigationArgs.dietId
+        var title = navigationArgs.title
+
         if (id == "-1") {
+            title = "New Diet"
             toggleEditMode()
             binding.fabDelete.visibility = View.GONE
 
