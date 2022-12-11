@@ -1,6 +1,7 @@
 package project.st991377867.marcin.data.model
 
 import java.util.Date
+import kotlin.math.roundToInt
 
 class DailyCalorieIntake(
     recordDate: Date
@@ -17,6 +18,7 @@ class DailyCalorieIntake(
     }
     fun addItem(entryDate: Date, name: String, quantity: Double, kcal: Int){
         items.add(ItemEntry(entryDate, name, quantity, kcal))
-        totalCalories += kcal
+
+        totalCalories += (quantity * kcal).roundToInt()
     }
 }

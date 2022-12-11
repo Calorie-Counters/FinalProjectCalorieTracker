@@ -47,6 +47,8 @@ class HelpEditFragment : Fragment(){
                 val text = binding.helpEditFragmentEditText.text.toString()
                 Log.d("HelpEditFrag", text)
                 viewModel.saveHelp(text)
+                val action = HelpEditFragmentDirections.actionHelpEditFragmentToNavHelp()
+                findNavController().navigate(action)
             }
         }
 
