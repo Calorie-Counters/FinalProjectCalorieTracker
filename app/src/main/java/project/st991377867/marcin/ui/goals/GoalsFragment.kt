@@ -56,13 +56,7 @@ class GoalsFragment : Fragment() {
                     populate()
                     binding.goalsEditGoalStatement.setText("")
                     binding.goalsEditCalorieTargetET.setText("")
-                }/*
-                binding.goalsSetDate.text = dateFormat.format(Calendar.getInstance().time)
-
-
-                binding.goalsDisplayGoalGroup.visibility = View.VISIBLE
-                binding.goalsNoGoalGroup.visibility = View.GONE
-                binding.goalsEditGoalGroup.visibility = View.GONE*/
+                }
             } catch (e: Exception){
                 Toast.makeText(activity,"Error Saving Goal", Toast.LENGTH_LONG).show()
             }

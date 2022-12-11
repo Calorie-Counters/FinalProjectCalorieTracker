@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="helpTxt"
+            type="String" />
+    </data>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <ImageView
+                android:id="@+id/background"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_centerInParent="true"
+                android:scaleType="fitCenter"
+                android:src="@drawable/circle_shape" />
+
+            <ImageView
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:scaleType="fitCenter"
+                android:layout_width="wrap_content"
+                android:layout_centerInParent="true"
+                android:id="@+id/logo"
+                android:src="@drawable/logo"/>
+        </RelativeLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CalorieTracker Help"
+            android:textSize="24sp"
+            android:padding="8dp"
+            android:layout_gravity="center"/>
+        <Button
+            android:id="@+id/helpFragmentAdminEditButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="visible"
+            android:text="Edit"/>
+        <ScrollView
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <!--android:background="#EDE7F6"-->
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/helpFragmentTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:paddingBottom="16dp"
+                    android:text="@{helpTxt}"
+                    android:textAlignment="center"
+                    android:textSize="16sp" />
+
+                <!--<TextView
+                    android:id="@+id/goalsHelp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Goals: A Goal can be set to help keep you consistent with your calorie intake. To view or set a goal, navigate to the Goals section via the navigation drawer which can be opened from the home page using the hamburger button in the top left."
+                    android:textSize="16sp"
+                    android:textAlignment="center"
+                    android:padding="8dp" />
+
+                <TextView
+                    android:id="@+id/HistoryHelp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="History: You can view your calorie intake history via the History section which can be navigated to from the navigation drawer in the homepage. There are options to view history from the past 7 days or 30 days. Summary information such as total calorie intake is displayed for each day, even if no intake records are present for that day. More detailed information can be seen by expanding the cards by pressing on the black box in the card."
+                    android:textSize="16sp"
+                    android:textAlignment="center"
+                    android:padding="8dp" />
+
+                <TextView
+                    android:id="@+id/dietHelp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Diets: The Diets section provides various options for nutritious and filling meals. You can navigate to the diets page from anywhere within the application via the diets button in the bottom navigation bar."
+                    android:textSize="16sp"
+                    android:textAlignment="center"
+                    android:padding="8dp" />
+
+                <TextView
+                    android:id="@+id/reminderHelp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Reminders: Various reminders can be set to help keep you on track for various things like achieving your goal, keeping your mealtimes consistent, or even just reminding you to enter your calorie intake information for the day. You can navigate to the reminders section via the navigation drawer in the homepage."
+                    android:textSize="16sp"
+                    android:textAlignment="center" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="something else: whaterver else I can think of"
+                    android:textSize="16sp"
+                    android:padding="8dp" />-->
+            </LinearLayout>
+
+        </ScrollView>
+    </LinearLayout>
+</layout>
