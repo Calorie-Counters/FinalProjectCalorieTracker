@@ -123,7 +123,7 @@
     <fragment
         android:id="@+id/nav_help"
         android:name="project.st991377867.marcin.ui.help.HelpFragment"
-        android:label="fragment_help"
+        android:label="Help"
         tools:layout="@layout/fragment_help">
         <action
             android:id="@+id/action_helpFragment_to_nav_help_edit"
@@ -132,7 +132,7 @@
     <fragment
         android:id="@+id/nav_help_edit"
         android:name="project.st991377867.marcin.ui.help.HelpEditFragment"
-        android:label="fragment_help_edit"
+        android:label="Edit Help Page"
         tools:layout="@layout/fragment_help_edit">
         <action
             android:id="@+id/action_helpEditFragment_to_nav_help"
