@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
             name="helpTxt"
@@ -12,7 +14,7 @@
 
 
         <RelativeLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center">
 
@@ -32,6 +34,18 @@
                 android:layout_centerInParent="true"
                 android:id="@+id/logo"
                 android:src="@drawable/logo"/>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/helpFragmentAdminEditButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:focusable="true"
+                android:clickable="true"
+                android:contentDescription="Edit Help Instructions"
+                android:src="@drawable/ic_baseline_edit_note_24"
+                android:visibility="visible" />
         </RelativeLayout>
         <TextView
             android:layout_width="wrap_content"
@@ -40,13 +54,9 @@
             android:textSize="24sp"
             android:padding="8dp"
             android:layout_gravity="center"/>
-        <Button
-            android:id="@+id/helpFragmentAdminEditButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:visibility="visible"
-            android:text="Edit"/>
+
+
+
         <ScrollView
             xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"

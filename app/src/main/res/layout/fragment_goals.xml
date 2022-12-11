@@ -36,12 +36,7 @@
                 , goalsStatementLabel, goalsStatement, goalsSetDateLabel, goalsEditButton, goalsDeleteButton"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="0dp" />
-    <!--        <androidx.constraintlayout.widget.Group
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:visibility="visible"
-                android:id="@+id/goalsIcon"
-                app:constraint_referenced_ids="logo, goalsDailyStatus"/>-->
+
 
             <androidx.constraintlayout.widget.Group
                 android:id="@+id/goalsEditGoalGroup"
@@ -184,20 +179,21 @@
 
             <Button
                 android:id="@+id/goalsEditButton"
-                android:layout_width="wrap_content"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintLeft_toLeftOf="@id/goalsConstraintLayout"
-                app:layout_constraintRight_toRightOf="@+id/goalsConstraintLayout"
+                app:layout_constraintRight_toLeftOf="@+id/goalsDeleteButton"
                 app:layout_constraintTop_toBottomOf="@id/goalsStatementLabel"
                 app:layout_constraintBottom_toBottomOf="@id/goalsConstraintLayout"
                 android:text="Edit Goal"/>
             <Button
                 android:id="@+id/goalsDeleteButton"
-                android:layout_width="wrap_content"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintLeft_toLeftOf="@id/goalsConstraintLayout"
+                app:layout_constraintLeft_toRightOf="@id/goalsEditButton"
                 app:layout_constraintRight_toRightOf="@id/goalsConstraintLayout"
-                app:layout_constraintTop_toBottomOf="@id/goalsEditButton"
+                app:layout_constraintTop_toTopOf="@id/goalsEditButton"
+                app:layout_constraintBottom_toBottomOf="@+id/goalsEditButton"
                 android:text="Remove Goal"/>
 
 
