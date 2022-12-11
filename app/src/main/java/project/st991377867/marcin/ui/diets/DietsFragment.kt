@@ -47,7 +47,7 @@ class DietsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val adapter = DietListAdapter {
-            val action = DietsFragmentDirections.actionNavDietsToNavDietDetail("View Diet", it.id)
+            val action = DietsFragmentDirections.actionNavDietsToNavDietDetail("Diet", it.id)
             this.findNavController().navigate(action)
         }
         viewModel.requestDiets()
