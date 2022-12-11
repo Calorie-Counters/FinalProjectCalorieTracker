@@ -1,23 +1,22 @@
 package project.st991377867.marcin.ui.diets
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import project.st991377867.marcin.R
-import project.st991377867.marcin.data.model.Diet
-import project.st991377867.marcin.data.model.Notification
 import project.st991377867.marcin.databinding.FragmentDietsBinding
-import project.st991377867.marcin.ui.notifications.NotificationRecyclerView
+import project.st991377867.marcin.adapters.DietListAdapter
+import project.st991377867.marcin.data.model.User
 
 class DietsFragment : Fragment() {
 
     companion object {
-        fun newInstance() = DietsFragment()
+
     }
 
     private val viewModel: DietsViewModel by lazy {
@@ -30,19 +29,34 @@ class DietsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentDietsBinding.inflate(inflater)
+        binding = FragmentDietsBinding.inflate(inflater, container, false)
         recordRecyclerView = binding.recyclerView
+
+        binding.fab.setImageResource(android.R.drawable.ic_input_add)
+        binding.fab.visibility = if (User.isAdmin()) View.VISIBLE else View.GONE
+        // prevent from clicking behind the fab
+        binding.fab.setOnClickListener {
+            val action = DietsFragmentDirections.actionNavDietsToNavDietDetail("New Diet")
+            this.findNavController().navigate(action)
+        }
 
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val list: List<Diet> = viewModel.getDummyDiets()
 
-        recordRecyclerView.adapter = DietRecyclerView(list)
-        recordRecyclerView.layoutManager = LinearLayoutManager(activity)
-        recordRecyclerView.setHasFixedSize(true)
+        val adapter = DietListAdapter {
+            val action = DietsFragmentDirections.actionNavDietsToNavDietDetail("Edit Diet", it.id)
+            this.findNavController().navigate(action)
+        }
+        viewModel.requestDiets()
+        viewModel.dietListLiveData.observe(viewLifecycleOwner) {
+            adapter.submitList(it)
+        }
+
+        binding.recyclerView.adapter = adapter
+        binding.recyclerView.layoutManager = LinearLayoutManager(this.context)
     }
 
 }

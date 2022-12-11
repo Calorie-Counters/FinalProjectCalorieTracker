@@ -8,11 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import project.st991377867.marcin.R
 import project.st991377867.marcin.data.model.Notification
-import project.st991377867.marcin.data.model.Reminder
 import project.st991377867.marcin.databinding.FragmentNotificationsBinding
-import project.st991377867.marcin.ui.reminders.RemindersRecyclerView
 
 class NotificationsFragment : Fragment() {
 

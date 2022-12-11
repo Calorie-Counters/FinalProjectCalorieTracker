@@ -3,7 +3,6 @@ package project.st991377867.marcin.ui.login
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -11,12 +10,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.NavHostFragment
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
 import com.google.firebase.auth.FirebaseAuth
 import project.st991377867.marcin.MainActivity
 import project.st991377867.marcin.R
+import project.st991377867.marcin.data.model.User
 import project.st991377867.marcin.databinding.FragmentLoginBinding
 
 /**
@@ -78,6 +79,9 @@ class LoginFragment : Fragment() {
                     "Successfully signed in user " +
                             "${FirebaseAuth.getInstance().currentUser?.displayName}!"
                 )
+                // TODO: Double check edge cases - Marcin K. (12/01/22)
+                User.getUser(true)
+                // Redirect to home screen
                 redirectToFragment(R.id.nav_home)
             } else {
                 // Sign in failed. If response is null the user canceled the sign-in flow using
@@ -97,7 +101,6 @@ class LoginFragment : Fragment() {
         // they will need to create a password as well.
         val providers = arrayListOf(
             AuthUI.IdpConfig.EmailBuilder().build(),
-//            AuthUI.IdpConfig.GoogleBuilder().build()
         )
 
         // Create and launch the sign-in intent.

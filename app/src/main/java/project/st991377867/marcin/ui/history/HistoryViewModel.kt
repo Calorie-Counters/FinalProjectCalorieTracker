@@ -1,8 +1,12 @@
 package project.st991377867.marcin.ui.history
 
+import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.tasks.await
 import project.st991377867.marcin.data.FirebaseUserLiveData
 import project.st991377867.marcin.data.model.DailyCalorieIntake
 import java.text.DateFormat
@@ -15,14 +19,15 @@ import kotlin.random.nextInt
 class HistoryViewModel : ViewModel() {
 
     val fireStoreDatabase = FirebaseFirestore.getInstance();
-
     val firebaseUserID = FirebaseAuth.getInstance().currentUser?.uid
     val dateFormat: DateFormat = SimpleDateFormat("dd/MM/yyyy")
 
-    fun recentHistory(duration: Int) :MutableMap<String, DailyCalorieIntake> {
+    val historyList: MutableLiveData<List<DailyCalorieIntake>> = MutableLiveData()
+
+
+    suspend fun recentHistory(duration: Int) :MutableMap<String, DailyCalorieIntake> {
 
         var dailyCalorieMap: MutableMap<String, DailyCalorieIntake> = mutableMapOf()
-        val result: StringBuffer = StringBuffer()
 
         val calendarDateNow = Calendar.getInstance()
         calendarDateNow.set(Calendar.HOUR_OF_DAY, 0)
@@ -44,6 +49,7 @@ class HistoryViewModel : ViewModel() {
         }
 
         if (firebaseUserID != null){
+            Log.d("HistoryFragment", "UID: ${firebaseUserID}")
             fireStoreDatabase.collection("items")// replace with w/e the food collection is called
                 .whereEqualTo("uid", firebaseUserID)
                 .whereLessThan("timestamp", now)
@@ -51,57 +57,30 @@ class HistoryViewModel : ViewModel() {
                 .get()
                 .addOnCompleteListener {
                     if (it.isSuccessful) {
+                        Log.d("HistoryFragment", "num results: ${it.result.size()}")
                         for (document in it.result){
                             try {
                                 val timeStamp = document.data.getValue("timestamp") as com.google.firebase.Timestamp
                                 val recordDate = timeStamp.toDate()
                                 // check to make sure the value is in the map
                                 if (dailyCalorieMap.containsKey(dateFormat.format(recordDate))){
+                                    Log.d("HistoryFragment", "record date in map")
                                     dailyCalorieMap[dateFormat.format(recordDate)]!!
                                         .addItem(recordDate,
                                             document.data.getValue("itemName").toString(),
-                                            document.data.getValue("quantity").toString().toInt(),
-                                            document.data.getValue("kcal").toString().toInt())
+                                            document.data.getValue("itemQuantity").toString().toDouble(),
+                                            document.data.getValue("itemCalorie").toString().toInt())
                                 }
-
-                                // old stringbuffer code
-                                /*result.append(dateFormat.format(timeStamp.toDate())).append("|")
-                                result.append(document.data.getValue("itemName")).append("|")
-                                result.append(document.data.getValue("quantity")).append("|")
-                                result.append(document.data.getValue("kcal")).append("\n")*/
-                            } catch (e: NoSuchElementException){
-                                //result.append("\n")
-                            } catch (e: NumberFormatException){
-                                break;
+                            }
+                            catch (e: Exception){
+                                Log.e("HistoryFragment", e.printStackTrace().toString())
+                                //break;
                             }
                         }
                     }
                 }
-        } else { //tmp
-            var tempCalendar2 = Calendar.getInstance()
-            tempCalendar2.add(Calendar.DAY_OF_YEAR, -1)
-            var x = 1
-
-            while (x <= duration) {
-                val tempDate = tempCalendar2.time
-                val iterator = Random.nextInt(1, 3)
-
-                for (y in 1.. iterator){
-                    if (dailyCalorieMap.containsKey(dateFormat.format(tempDate))) {
-                        dailyCalorieMap[dateFormat.format(tempDate)]!!
-                            .addItem(
-                                tempDate,
-                                "item${y}",
-                                y,
-                                Random.nextInt(1, 500)
-                            )
-                    }
-                }
-                tempCalendar2.add(Calendar.DAY_OF_YEAR, -1)
-                x++
-            }
+                .await()
         }
-        //return result;
         return dailyCalorieMap
     }
 

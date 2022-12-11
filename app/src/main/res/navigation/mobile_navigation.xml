@@ -34,12 +34,20 @@
         android:id="@+id/nav_reminders"
         android:name="project.st991377867.marcin.ui.reminders.RemindersFragment"
         android:label="@string/menu_reminders"
-        tools:layout="@layout/fragment_reminders" />
+        tools:layout="@layout/fragment_reminders" >
+        <action
+            android:id="@+id/action_nav_reminders_to_nav_reminder_detail"
+            app:destination="@id/nav_reminder_detail" />
+    </fragment>
     <fragment
         android:id="@+id/nav_diets"
         android:name="project.st991377867.marcin.ui.diets.DietsFragment"
         android:label="@string/menu_diets"
-        tools:layout="@layout/fragment_diets" />
+        tools:layout="@layout/fragment_diets" >
+        <action
+            android:id="@+id/action_nav_diets_to_nav_diet_detail"
+            app:destination="@id/nav_diet_detail" />
+    </fragment>
     <fragment
         android:id="@+id/nav_goals"
         android:name="project.st991377867.marcin.ui.goals.GoalsFragment"
@@ -74,6 +82,47 @@
         android:name="project.st991377867.marcin.ui.item.ItemDetailFragment"
         android:label="fragment_item_detail"
         tools:layout="@layout/fragment_item_detail" />
+    <fragment
+        android:id="@+id/nav_reminder_detail"
+        android:name="project.st991377867.marcin.ui.reminders.ReminderDetailsFragment"
+        android:label="{title}"
+        tools:layout="@layout/fragment_reminder_details" >
+        <argument
+            android:name="title"
+            app:argType="string" />
+        <argument
+            android:name="reminder_id"
+            android:defaultValue="-1"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_addItemFragment_to_itemListFragment"
+            app:destination="@id/nav_reminders"
+            app:popUpTo="@id/nav_reminders"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_diet_detail"
+        android:name="project.st991377867.marcin.ui.diets.DietDetailsFragment"
+        android:label="{title}"
+        tools:layout="@layout/fragment_diet_details" >
+        <argument
+            android:name="title"
+            app:argType="string" />
+        <argument
+            android:name="diet_id"
+            android:defaultValue="-1"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_dietDetailsFragment_to_nav_diets"
+            app:destination="@id/nav_diets"
+            app:popUpTo="@id/nav_diets"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_about_us"
+        android:name="project.st991377867.marcin.ui.about.AboutFragment"
+        android:label="About Us"
+        tools:layout="@layout/fragment_about" />
 
 
 </navigation>

@@ -15,7 +15,7 @@ class DailyCalorieIntake(
         date = recordDate
         items = mutableListOf()
     }
-    fun addItem(entryDate: Date, name: String, quantity: Int, kcal: Int){
+    fun addItem(entryDate: Date, name: String, quantity: Double, kcal: Int){
         items.add(ItemEntry(entryDate, name, quantity, kcal))
         totalCalories += kcal
     }
