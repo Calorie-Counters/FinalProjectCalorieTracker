@@ -1,5 +1,12 @@
 package project.st991377867.marcin
 
+/**
+ * Created by Marcin Koziel (991377867), Jordan Graham (991576506), and Ningfan Chen (991601589)
+ * Created on 11/25/2022
+ *
+ * This application is a mobile application that allows users monitor and manage their daily calorie intake.
+ */
+
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -98,6 +105,7 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         if (FirebaseAuth.getInstance().currentUser != null) {
             user = User.requestLiveUserData()
+            Log.d(TAG, "User is logged in: ${user.value}")
             setDrawerFields(user)
         } else {
             NavHostFragment.findNavController(

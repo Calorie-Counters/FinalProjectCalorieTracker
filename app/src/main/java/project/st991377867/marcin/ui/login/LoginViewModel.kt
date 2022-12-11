@@ -6,6 +6,11 @@ import androidx.lifecycle.map
 import project.st991377867.marcin.data.FirebaseUserLiveData
 import project.st991377867.marcin.data.model.User
 
+/**
+ * Login view model
+ *
+ * @constructor Create empty Login view model
+ */
 class LoginViewModel : ViewModel() {
 
     companion object {
@@ -17,6 +22,10 @@ class LoginViewModel : ViewModel() {
         AUTHENTICATED, UNAUTHENTICATED, INVALID_AUTHENTICATION
     }
 
+    /**
+     * Authentication state
+     * return authentication state
+     */
     val authenticationState = FirebaseUserLiveData().map { user ->
         if (user != null) {
             AuthenticationState.AUTHENTICATED
