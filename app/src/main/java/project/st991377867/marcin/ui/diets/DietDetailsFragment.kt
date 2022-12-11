@@ -42,7 +42,9 @@ class DietDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val id = navigationArgs.dietId
+
         if (id == "-1") {
+
             toggleEditMode()
             binding.fabDelete.visibility = View.GONE
 
@@ -63,7 +65,11 @@ class DietDetailsFragment : Fragment() {
                 }
             }
         } else {
-            binding.fabDelete.visibility = if (User.isAdmin()) View.VISIBLE else View.GONE
+            if (User.isAdmin()) {
+                binding.fabDelete.visibility = View.VISIBLE
+            } else {
+                binding.fabDelete.visibility = View.GONE
+            }
 
             viewModel.requestDiet(id).observe(viewLifecycleOwner) {
                 viewModel.setDiet(it)
